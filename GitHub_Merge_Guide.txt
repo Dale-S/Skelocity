@@ -1,0 +1,11 @@
+-------- GITHUB BRANCH UPLOAD STEPS -------
+1. Open GitHub Desktop
+2. Create Branch
+3. Make your changes
+4. Type out Summary
+5. Type out Description
+6. Commit Branch
+7. Publish
+8. Preview Pull Request
+9. Create Pull Request
+10. GitHub browser opens up then Create Pull Request again
