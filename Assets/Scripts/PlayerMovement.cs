@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     //Game Objects
     private Rigidbody playerRB;
     private GameObject player;
+    private Transform playerObject; // for easy scaling for sliding
     private Vector3 playerPos;
     
     //Max Speed Variables
@@ -37,6 +38,18 @@ public class PlayerMovement : MonoBehaviour
     private float speedIncWalk = 0.25f;
     private float speedIncRun = 0.50f;
     
+    //Slide key
+    private KeyCode slideKey = KeyCode.LeftControl;
+    
+    //Slide variables
+    public float maxSlideTime;
+    public float slideForce;
+    private float slideTimer;
+    
+    public float slideYScale = 0.5f;
+    private float startingYScale;
+    private bool isSliding = false;
+    
     //Status Variables
     private bool isGrounded = true;
     private bool jumpBuffer = true;
@@ -47,12 +60,14 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         playerRB = this.gameObject.GetComponent<Rigidbody>();
+        playerObject = GetComponent<Transform>();
         player = this.gameObject;
         playerPos = player.transform.position;
         movement = new Vector3(0, 0, 0);
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;
         jumps = numOfJumps;
+        startingYScale = playerObject.localScale.y;
     }
 
     private void Update()
@@ -83,6 +98,13 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        
+        //Sliding Control
+        if (Input.GetKeyDown(slideKey) && isGrounded)
+            StartSlide();
+
+        if (Input.GetKeyUp(slideKey) && isSliding || !isGrounded)
+            StopSlide();
         //----------------------------------------------------------------------\\
     }
     void FixedUpdate()
@@ -159,8 +181,46 @@ public class PlayerMovement : MonoBehaviour
             movement.y = 0;
         }
         playerRB.velocity = movement;
-        //Debug.Log("Current velocity: " + pVelocity);
+        //Debug.Log("Current velocity: " + pVelocity)
+        
+        //Player sliding update
+        if (isSliding)
+            Slide();
+        
     }
 
-    
+    private void StartSlide()
+    {
+        isSliding = true;
+
+        playerObject.localScale = new Vector3(playerObject.localScale.x, slideYScale, playerObject.localScale.z);
+        playerRB.AddForce(Vector3.down * 1f, ForceMode.Impulse);
+
+        slideTimer = maxSlideTime;
+    }
+
+    private void StopSlide()
+    {
+        isSliding = false;
+        playerObject.localScale = new Vector3(playerObject.localScale.x, startingYScale, playerObject.localScale.z);
+    }
+
+    private void Slide()
+    {
+        if (pVelocity >= 0)
+        {
+            pVelocity += slideForce;
+        } else if (pVelocity < 0)
+        {
+            pVelocity -= slideForce;
+        }
+        
+        
+        slideTimer -= Time.deltaTime;
+        
+        if (slideTimer <= 0)
+        {
+            StopSlide();
+        }
+    }
 }
