@@ -194,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
         isSliding = true;
 
         playerObject.localScale = new Vector3(playerObject.localScale.x, slideYScale, playerObject.localScale.z);
-        // playerRB.AddForce(Vector3.down * 0.1f, ForceMode.Impulse);
+        playerRB.AddForce(Vector3.down * 1f, ForceMode.Impulse);
 
         slideTimer = maxSlideTime;
     }
