@@ -14619,7 +14619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pVelocity: 0
   wallSlideSpeed: 1
-  yWallForce: 30
+  yWallForce: 20
   wallJumpTime: 1
   extraJumps: 0
   againstWall: 0

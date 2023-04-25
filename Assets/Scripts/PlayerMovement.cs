@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     private float startingYScale;
     
     //Wall Slide and Wall Jump Variables
+    private float wallJumpDelay = 5f;
+    private float wallJumpTimer = 0f;
     public float wallSlideSpeed = 2f;
     private float savedPlayerVelocity = -1f;
     public float yWallForce;
@@ -175,8 +177,9 @@ public class PlayerMovement : MonoBehaviour
         WallSlide();
         
         //If Wall Sliding and want to move, Wall Jump;
-        if ((Input.GetKeyDown(rightKey) || Input.GetKeyDown(leftKey)) && isWallSliding)
+        if (((Input.GetKeyDown(rightKey) || Input.GetKeyDown(leftKey)) && isWallSliding) && wallJumpTimer <= 0) //Go in if condition if you haven't wall jumped recently and are wall sliding
         {
+            Debug.Log("Wall Jump!");
             WallJump();
         }
 
@@ -273,6 +276,13 @@ public class PlayerMovement : MonoBehaviour
             Slide(); 
         }
         
+        //Player Wall Jump Delay
+        if (wallJumpTimer > 0)
+        {
+            wallJumpTimer -= Time.deltaTime;
+            // Debug.Log(wallJumpTimer);
+        }
+        
         //Player movement update (!|**Keep At Bottom Of Fixed Update**|!)
         //Update Players Current Velocity to pVelocity
         movement.x = pVelocity;
@@ -349,7 +359,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsTouchingWall() && !isGrounded && movement.x != 0)
         {
-            Debug.Log("Wall Sliding!");
+            // Debug.Log("Wall Sliding!");
             if (savedPlayerVelocity == -1f)
             {
                 savedPlayerVelocity = pVelocity;
@@ -366,6 +376,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallJump()
     {
+        wallJumpTimer = wallJumpDelay; 
+        
         isWallJumping = true;
         Invoke("SetWallJumpToFalse", wallJumpTime);
     }
