@@ -53,12 +53,23 @@ public class PlayerMovement : MonoBehaviour
     private float slideTimer;
     private float slideYScale = 0.5f;
     private float startingYScale;
+    
+    //Wall Slide and Wall Jump Variables
+    private float wallJumpDelay = 5f;
+    private float wallJumpTimer = 0f;
+    public float wallSlideSpeed = 2f;
+    private float savedPlayerVelocity = -1f;
+    public float yWallForce;
+    public float wallJumpTime;
+    
 
     //Status Variables
     private bool isGrounded = true;
     private bool jumpBuffer = true;
     private bool sprinting = true;
     private bool spacePressed = false;
+    private bool isWallSliding;
+    private bool isWallJumping;
     private bool isSliding = false;
     public bool extraJumps = false;
     public bool againstWall = false;
@@ -66,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
 
     //Wall detection variables
     private float wallDetectionDist = 1.5f;
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
 
     private void Start()
     {
@@ -86,8 +99,6 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
         jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
         againstWall = Physics.Raycast(this.transform.position, Vector3.forward, wallDetectionDist);
-        
-        
 
         //Jumping Control-------------------------------------------------------\\
         if (Input.GetKeyDown(jumpKey) && jumpBuffer)
@@ -161,6 +172,21 @@ public class PlayerMovement : MonoBehaviour
             StopSlide();
         }
         //----------------------------------------------------------------------\\
+        
+        //Check if on Wall and off the ground. If so, slide on the wall.
+        WallSlide();
+        
+        //If Wall Sliding and want to move, Wall Jump;
+        if (((Input.GetKeyDown(rightKey) || Input.GetKeyDown(leftKey)) && isWallSliding) && wallJumpTimer <= 0) //Go in if condition if you haven't wall jumped recently and are wall sliding
+        {
+            Debug.Log("Wall Jump!");
+            WallJump();
+        }
+
+        if (isWallJumping)
+        {
+            playerRB.velocity = new Vector3(-savedPlayerVelocity, yWallForce, playerRB.velocity.z);
+        }
     }
     void FixedUpdate()
     {
@@ -250,6 +276,13 @@ public class PlayerMovement : MonoBehaviour
             Slide(); 
         }
         
+        //Player Wall Jump Delay
+        if (wallJumpTimer > 0)
+        {
+            wallJumpTimer -= Time.deltaTime;
+            // Debug.Log(wallJumpTimer);
+        }
+        
         //Player movement update (!|**Keep At Bottom Of Fixed Update**|!)
         //Update Players Current Velocity to pVelocity
         movement.x = pVelocity;
@@ -307,5 +340,50 @@ public class PlayerMovement : MonoBehaviour
         {
             StopSlide();
         }
+    }
+
+    private bool IsTouchingWall()
+    {
+        var objects = Physics.OverlapSphere(wallCheck.position, 0.2f, wallLayer.value);
+        foreach (var variable in (objects))
+        {
+            if (variable.CompareTag("Walls"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    private void WallSlide()
+    {
+        if (IsTouchingWall() && !isGrounded && movement.x != 0)
+        {
+            // Debug.Log("Wall Sliding!");
+            if (savedPlayerVelocity == -1f)
+            {
+                savedPlayerVelocity = pVelocity;
+            }
+            isWallSliding = true;
+            movement.y = Mathf.Clamp(playerRB.velocity.y, -wallSlideSpeed, float.MaxValue);
+        }
+        else
+        {
+            isWallSliding = false;
+            savedPlayerVelocity = -1f;
+        }
+    }
+
+    private void WallJump()
+    {
+        wallJumpTimer = wallJumpDelay; 
+        
+        isWallJumping = true;
+        Invoke("SetWallJumpToFalse", wallJumpTime);
+    }
+
+    private void SetWallJumpToFalse()
+    {
+        isWallJumping = false;
     }
 }
