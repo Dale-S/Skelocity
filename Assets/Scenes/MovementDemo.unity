@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028387, g: 0.22571461, b: 0.30692297, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028383, g: 0.2257147, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -523,9 +523,9 @@ GameObject:
   - component: {fileID: 91923999}
   - component: {fileID: 91923998}
   - component: {fileID: 91923997}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (36)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -620,9 +620,9 @@ GameObject:
   - component: {fileID: 103092640}
   - component: {fileID: 103092639}
   - component: {fileID: 103092638}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (76)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -814,9 +814,9 @@ GameObject:
   - component: {fileID: 127210595}
   - component: {fileID: 127210594}
   - component: {fileID: 127210593}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (34)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1008,9 +1008,9 @@ GameObject:
   - component: {fileID: 207893464}
   - component: {fileID: 207893463}
   - component: {fileID: 207893462}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (48)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1430,9 +1430,9 @@ GameObject:
   - component: {fileID: 231405431}
   - component: {fileID: 231405430}
   - component: {fileID: 231405429}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (42)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1802,9 +1802,9 @@ GameObject:
   - component: {fileID: 262195204}
   - component: {fileID: 262195203}
   - component: {fileID: 262195202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (65)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2516,9 +2516,9 @@ GameObject:
   - component: {fileID: 388858884}
   - component: {fileID: 388858883}
   - component: {fileID: 388858882}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (32)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2807,9 +2807,9 @@ GameObject:
   - component: {fileID: 431869303}
   - component: {fileID: 431869302}
   - component: {fileID: 431869301}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (69)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3195,9 +3195,9 @@ GameObject:
   - component: {fileID: 456037856}
   - component: {fileID: 456037855}
   - component: {fileID: 456037854}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (40)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3389,9 +3389,9 @@ GameObject:
   - component: {fileID: 458754927}
   - component: {fileID: 458754926}
   - component: {fileID: 458754925}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (81)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4068,9 +4068,9 @@ GameObject:
   - component: {fileID: 526129520}
   - component: {fileID: 526129519}
   - component: {fileID: 526129518}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (58)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4262,9 +4262,9 @@ GameObject:
   - component: {fileID: 536670581}
   - component: {fileID: 536670580}
   - component: {fileID: 536670579}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (55)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4359,9 +4359,9 @@ GameObject:
   - component: {fileID: 548512613}
   - component: {fileID: 548512612}
   - component: {fileID: 548512611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (43)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5135,9 +5135,9 @@ GameObject:
   - component: {fileID: 665976706}
   - component: {fileID: 665976705}
   - component: {fileID: 665976704}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (71)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5229,9 +5229,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 672840870}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallLeft
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5773,9 +5773,9 @@ GameObject:
   - component: {fileID: 713036269}
   - component: {fileID: 713036268}
   - component: {fileID: 713036267}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (57)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5967,9 +5967,9 @@ GameObject:
   - component: {fileID: 722143726}
   - component: {fileID: 722143725}
   - component: {fileID: 722143724}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (79)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6258,9 +6258,9 @@ GameObject:
   - component: {fileID: 796021757}
   - component: {fileID: 796021756}
   - component: {fileID: 796021755}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (77)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6452,9 +6452,9 @@ GameObject:
   - component: {fileID: 817052070}
   - component: {fileID: 817052069}
   - component: {fileID: 817052068}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (80)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6646,9 +6646,9 @@ GameObject:
   - component: {fileID: 889828095}
   - component: {fileID: 889828094}
   - component: {fileID: 889828093}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (50)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6743,9 +6743,9 @@ GameObject:
   - component: {fileID: 898039281}
   - component: {fileID: 898039280}
   - component: {fileID: 898039279}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (63)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6937,9 +6937,9 @@ GameObject:
   - component: {fileID: 908691319}
   - component: {fileID: 908691318}
   - component: {fileID: 908691317}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (39)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7040,7 +7040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &910802200
 Transform:
   m_ObjectHideFlags: 0
@@ -7226,9 +7226,9 @@ GameObject:
   - component: {fileID: 957254827}
   - component: {fileID: 957254826}
   - component: {fileID: 957254825}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (52)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7323,9 +7323,9 @@ GameObject:
   - component: {fileID: 962762374}
   - component: {fileID: 962762373}
   - component: {fileID: 962762372}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (46)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7615,9 +7615,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1035873630}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallRight
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8150,6 +8150,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062025193}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1062366412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062366413}
+  m_Layer: 0
+  m_Name: Wall Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1062366413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062366412}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.75, y: 0.25, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1968944005}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1064917159
 GameObject:
   m_ObjectHideFlags: 0
@@ -8453,9 +8484,9 @@ GameObject:
   - component: {fileID: 1082392500}
   - component: {fileID: 1082392499}
   - component: {fileID: 1082392498}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (82)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8647,9 +8678,9 @@ GameObject:
   - component: {fileID: 1090622866}
   - component: {fileID: 1090622865}
   - component: {fileID: 1090622864}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (51)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8744,9 +8775,9 @@ GameObject:
   - component: {fileID: 1090808375}
   - component: {fileID: 1090808374}
   - component: {fileID: 1090808373}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (47)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8841,9 +8872,9 @@ GameObject:
   - component: {fileID: 1096321867}
   - component: {fileID: 1096321866}
   - component: {fileID: 1096321865}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (70)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8938,9 +8969,9 @@ GameObject:
   - component: {fileID: 1103291651}
   - component: {fileID: 1103291650}
   - component: {fileID: 1103291649}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (49)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9035,9 +9066,9 @@ GameObject:
   - component: {fileID: 1109509785}
   - component: {fileID: 1109509784}
   - component: {fileID: 1109509783}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (72)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9229,9 +9260,9 @@ GameObject:
   - component: {fileID: 1116081396}
   - component: {fileID: 1116081395}
   - component: {fileID: 1116081394}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (44)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9617,9 +9648,9 @@ GameObject:
   - component: {fileID: 1196736419}
   - component: {fileID: 1196736418}
   - component: {fileID: 1196736417}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (62)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9714,9 +9745,9 @@ GameObject:
   - component: {fileID: 1203218583}
   - component: {fileID: 1203218582}
   - component: {fileID: 1203218581}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (33)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10280,9 +10311,9 @@ GameObject:
   - component: {fileID: 1312657345}
   - component: {fileID: 1312657344}
   - component: {fileID: 1312657343}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (61)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10571,9 +10602,9 @@ GameObject:
   - component: {fileID: 1361134651}
   - component: {fileID: 1361134650}
   - component: {fileID: 1361134649}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (85)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10668,9 +10699,9 @@ GameObject:
   - component: {fileID: 1375137572}
   - component: {fileID: 1375137571}
   - component: {fileID: 1375137570}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (74)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10959,9 +10990,9 @@ GameObject:
   - component: {fileID: 1385391448}
   - component: {fileID: 1385391447}
   - component: {fileID: 1385391446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (30)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11089,9 +11120,9 @@ GameObject:
   - component: {fileID: 1407513370}
   - component: {fileID: 1407513369}
   - component: {fileID: 1407513368}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (54)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11380,9 +11411,9 @@ GameObject:
   - component: {fileID: 1441052099}
   - component: {fileID: 1441052098}
   - component: {fileID: 1441052097}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (68)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11865,9 +11896,9 @@ GameObject:
   - component: {fileID: 1611924330}
   - component: {fileID: 1611924329}
   - component: {fileID: 1611924328}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (56)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12544,9 +12575,9 @@ GameObject:
   - component: {fileID: 1774052763}
   - component: {fileID: 1774052762}
   - component: {fileID: 1774052761}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (41)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12641,9 +12672,9 @@ GameObject:
   - component: {fileID: 1779781364}
   - component: {fileID: 1779781363}
   - component: {fileID: 1779781362}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (37)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12932,9 +12963,9 @@ GameObject:
   - component: {fileID: 1814463360}
   - component: {fileID: 1814463359}
   - component: {fileID: 1814463358}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (73)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13029,9 +13060,9 @@ GameObject:
   - component: {fileID: 1820499886}
   - component: {fileID: 1820499885}
   - component: {fileID: 1820499884}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (38)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13417,9 +13448,9 @@ GameObject:
   - component: {fileID: 1875998801}
   - component: {fileID: 1875998800}
   - component: {fileID: 1875998799}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (45)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13611,9 +13642,9 @@ GameObject:
   - component: {fileID: 1900895711}
   - component: {fileID: 1900895710}
   - component: {fileID: 1900895709}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (83)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14290,9 +14321,9 @@ GameObject:
   - component: {fileID: 1948917064}
   - component: {fileID: 1948917063}
   - component: {fileID: 1948917062}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (78)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14570,6 +14601,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 910802200}
+  - {fileID: 1062366413}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14586,11 +14618,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pVelocity: 0
-  maxSlideTime: 1
-  slideForce: 0.25
-  slideYScale: 0.5
+  wallSlideSpeed: 2
+  yWallForce: 20
+  wallJumpTime: 1
   extraJumps: 0
   againstWall: 0
+  wallCheck: {fileID: 1062366413}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &1968944007
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14619,9 +14655,9 @@ GameObject:
   - component: {fileID: 1972509935}
   - component: {fileID: 1972509934}
   - component: {fileID: 1972509933}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (75)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15201,9 +15237,9 @@ GameObject:
   - component: {fileID: 2021737530}
   - component: {fileID: 2021737529}
   - component: {fileID: 2021737528}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (66)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15298,9 +15334,9 @@ GameObject:
   - component: {fileID: 2034347998}
   - component: {fileID: 2034347997}
   - component: {fileID: 2034347996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (53)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15492,9 +15528,9 @@ GameObject:
   - component: {fileID: 2081093959}
   - component: {fileID: 2081093958}
   - component: {fileID: 2081093957}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (84)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15783,9 +15819,9 @@ GameObject:
   - component: {fileID: 2105997942}
   - component: {fileID: 2105997941}
   - component: {fileID: 2105997940}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (67)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15880,9 +15916,9 @@ GameObject:
   - component: {fileID: 2106302810}
   - component: {fileID: 2106302809}
   - component: {fileID: 2106302808}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (31)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15977,9 +16013,9 @@ GameObject:
   - component: {fileID: 2107042058}
   - component: {fileID: 2107042057}
   - component: {fileID: 2107042056}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (59)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16074,9 +16110,9 @@ GameObject:
   - component: {fileID: 2131930076}
   - component: {fileID: 2131930075}
   - component: {fileID: 2131930074}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (35)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16268,9 +16304,9 @@ GameObject:
   - component: {fileID: 2138905237}
   - component: {fileID: 2138905236}
   - component: {fileID: 2138905235}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (60)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16365,9 +16401,9 @@ GameObject:
   - component: {fileID: 2140790026}
   - component: {fileID: 2140790025}
   - component: {fileID: 2140790024}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelFramePart (64)
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
