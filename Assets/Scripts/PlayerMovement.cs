@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     //Inventory Variables
     private Inventory inventory;
     [SerializeField] private UIInventory uiInventory;
+    [SerializeField] private EquippedUI equipUI;
     
     private void Start()
     {
@@ -88,6 +89,11 @@ public class PlayerMovement : MonoBehaviour
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
         uiInventory.SetPlayer(this);
+        
+        equipUI.SetInventory(inventory);
+        equipUI.SetPlayer(this);
+        
+        ItemWorld.spawnItemWorld(new Vector3(10, 2, -0.2f), new Item{itemType = Item.ItemType.Boots, amount = 1, buffValue = 1.05f});
     }
 
     private void OnTriggerEnter(Collider other)

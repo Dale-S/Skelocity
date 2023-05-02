@@ -66,7 +66,7 @@ public class UIInventory : MonoBehaviour
 
             itemSlot.GetComponent<Button_UI>().ClickFunc = () =>
             {
-                
+                inventory.EquipItem(item);
             };
             itemSlot.GetComponent<Button_UI>().MouseRightClickFunc = () =>
             {

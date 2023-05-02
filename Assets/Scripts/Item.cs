@@ -15,6 +15,16 @@ public class Item
 
    public ItemType itemType;
    public int amount;
+   public float buffValue;
+
+   public float GetStats()
+   {
+      switch (itemType)
+      {
+         default:
+         case ItemType.Boots: return buffValue;
+      }
+   }
 
    public Sprite GetSprite()
    {

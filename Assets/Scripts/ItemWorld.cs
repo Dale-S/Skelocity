@@ -35,8 +35,10 @@ public class ItemWorld : MonoBehaviour
 
     public void SetItem(Item newItem)
     {
-        this.item = newItem;
+        item = newItem;
+        Debug.Log(item.buffValue);
         spriteRenderer.sprite = newItem.GetSprite();
+        item.buffValue = newItem.buffValue;
         if (item.amount > 1)
         {
             textMeshProUGUI.SetText(item.amount.ToString());

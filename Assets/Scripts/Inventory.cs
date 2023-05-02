@@ -6,12 +6,15 @@ using UnityEngine;
 public class Inventory
 {
     public event EventHandler OnItemListChanged;
+    public event EventHandler OnEquippedItemsChanged;
     
     private List<Item> itemList;
+    private List<Item> equippedItems;
 
     public Inventory()
     {
         itemList = new List<Item>();
+        equippedItems = new List<Item>();
         
         AddItem(new Item{ itemType = Item.ItemType.Sword, amount = 1});
         AddItem(new Item{ itemType = Item.ItemType.Boots, amount = 1});
@@ -73,8 +76,58 @@ public class Inventory
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
     
+    public void EquipItem(Item item)
+    {
+        bool itemAlreadyInInventory = false;
+        foreach (var equipItem in equippedItems)
+        {
+            if (equipItem.itemType == item.itemType)
+            {
+                itemAlreadyInInventory = true;
+                break;
+            }
+        }
+
+        if (!itemAlreadyInInventory)
+        {
+            equippedItems.Add(item);
+            RemoveItem(item);
+        }
+
+
+        OnEquippedItemsChanged?.Invoke(this, EventArgs.Empty);
+    }
+    
+    public void UnequipItem(Item item)
+    {
+      
+        Item itemInInventory = null;
+        foreach (var equipItem in equippedItems)
+        {
+            if (equipItem.itemType == item.itemType)
+            {
+                equipItem.amount -= item.amount;
+                itemInInventory = equipItem;
+                break;
+            }
+        }
+
+        if (itemInInventory != null && itemInInventory.amount <= 0)
+        {
+            equippedItems.Remove(item);
+        }
+        
+        
+        OnEquippedItemsChanged?.Invoke(this, EventArgs.Empty);
+    }
+    
     public List<Item> GetItemList()
     {
         return itemList;
+    }
+
+    public List<Item> GetEquippedList()
+    {
+        return equippedItems;
     }
 }
