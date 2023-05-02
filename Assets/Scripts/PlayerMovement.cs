@@ -67,6 +67,10 @@ public class PlayerMovement : MonoBehaviour
     //Wall detection variables
     private float wallDetectionDist = 1.5f;
 
+    //Inventory Variables
+    private Inventory inventory;
+    [SerializeField] private UIInventory uiInventory;
+    
     private void Start()
     {
         playerRB = this.gameObject.GetComponent<Rigidbody>();
@@ -78,6 +82,20 @@ public class PlayerMovement : MonoBehaviour
         jumpVel = Mathf.Abs(gravity) * timeToApex;
         jumps = numOfJumps;
         startingYScale = playerObject.localScale.y;
+        
+        //Start Inventory
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+        uiInventory.SetPlayer(this);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ItemWorld itemWorld = other.GetComponent<ItemWorld>();
+        if (itemWorld == null) return;
+        //Touching Item
+        inventory.AddItem(itemWorld.GetItem());
+        itemWorld.DestroySelf();
     }
 
     private void Update()
@@ -307,5 +325,10 @@ public class PlayerMovement : MonoBehaviour
         {
             StopSlide();
         }
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 }
