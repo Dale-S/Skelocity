@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private KeyCode leftKey = KeyCode.A;
     private KeyCode rightKey = KeyCode.D;
     private KeyCode sprint = KeyCode.LeftShift;
+    private KeyCode inventoryKey = KeyCode.I;
 
     //Slide variables
     private float maxSlideTime = 0.4f;
@@ -177,6 +178,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(slideKey) && isSliding || !isGrounded)
         {
             StopSlide();
+        }
+        //----------------------------------------------------------------------\\
+        
+        //Inventory Toggle-------------------------------------------------------\\
+        if (Input.GetKeyDown(inventoryKey))
+        {
+            uiInventory.ChangeInventoryAlpha();
         }
         //----------------------------------------------------------------------\\
     }

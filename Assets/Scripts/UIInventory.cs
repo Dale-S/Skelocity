@@ -32,6 +32,19 @@ public class UIInventory : MonoBehaviour
         RefreshInventoryItems();
     }
 
+    public void ChangeInventoryAlpha()
+    {
+        var uiCanvas = GetComponent<CanvasGroup>();
+        var uiAlpha = uiCanvas.alpha;
+        if (uiAlpha == 1f)
+        {
+            uiCanvas.alpha = 0f;
+        } else if (uiAlpha == 0f)
+        {
+            uiCanvas.alpha = 1f;
+        }
+    }
+
     private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
     {
         RefreshInventoryItems();
