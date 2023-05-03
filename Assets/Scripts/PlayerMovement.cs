@@ -15,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 playerPos;
     
     //Max Speed Variables
-    private float maxVelocity = 15.0f;
+    private float defaultMaxVelocity = 15.0f;
+    private float maxVelocity;
     private float walkSpeed = 4.0f;
     private float runSpeed = 7.0f;
 
@@ -79,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
         playerObject = GetComponent<Transform>();
         player = this.gameObject;
         playerPos = player.transform.position;
+        maxVelocity = defaultMaxVelocity;
         movement = new Vector3(0, 0, 0);
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;
@@ -196,6 +198,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
+        //Equipped Items Buff
+        BootsBuff();
+
         //Walking and Running Control ------------------------------------------\\
         if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
         {
@@ -344,5 +349,17 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+
+    public void BootsBuff()
+    {
+        if (equipUI.equippedBoots == null && maxVelocity != defaultMaxVelocity)
+        {
+            maxVelocity = defaultMaxVelocity;
+        }
+        else if (equipUI.equippedBoots != null && maxVelocity == defaultMaxVelocity)
+        {
+            maxVelocity = defaultMaxVelocity * equipUI.equippedBoots.buffValue;
+        }
     }
 }

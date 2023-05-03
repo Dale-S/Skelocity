@@ -6,10 +6,13 @@ using UnityEngine;
 public class Inventory
 {
     public event EventHandler OnItemListChanged;
-    public event EventHandler OnEquippedItemsChanged;
+    public event EventHandler OnItemEquip;
+
+    public event EventHandler OnItemUnequip;
     
     private List<Item> itemList;
     private List<Item> equippedItems;
+    public Item lastRemoved;
 
     public Inventory()
     {
@@ -95,7 +98,7 @@ public class Inventory
         }
 
 
-        OnEquippedItemsChanged?.Invoke(this, EventArgs.Empty);
+        OnItemEquip?.Invoke(this, EventArgs.Empty);
     }
     
     public void UnequipItem(Item item)
@@ -108,6 +111,7 @@ public class Inventory
             {
                 equipItem.amount -= item.amount;
                 itemInInventory = equipItem;
+                lastRemoved = item;
                 break;
             }
         }
@@ -118,7 +122,7 @@ public class Inventory
         }
         
         
-        OnEquippedItemsChanged?.Invoke(this, EventArgs.Empty);
+        OnItemUnequip?.Invoke(this, EventArgs.Empty);
     }
     
     public List<Item> GetItemList()

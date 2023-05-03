@@ -10,13 +10,17 @@ public class EquippedUI : MonoBehaviour
 {
     private Inventory inventory;
     private Transform itemSlotContainer;
+    
     public Transform bootEquipSlot;
+    public Item equippedBoots;
+    
+    public Sprite emptyItem;
     private PlayerMovement player;
 
     private void Start()
     {
         itemSlotContainer = transform.Find("ItemSlotContainer");
-        bootEquipSlot = itemSlotContainer.Find("BootEquipSlot");
+        // bootEquipSlot = itemSlotContainer.Find("BootEquipSlot");
     }
 
     public void SetPlayer(PlayerMovement player)
@@ -28,17 +32,34 @@ public class EquippedUI : MonoBehaviour
     {
         this.inventory = inventory;
 
-        inventory.OnEquippedItemsChanged += Inventory_OnEquippedListChanged;
+        inventory.OnItemEquip += Inventory_OnItemEquip;
+        inventory.OnItemUnequip += Inventory_OnItemUnequip;
         RefreshInventoryItems();
     }
-
     
 
-    private void Inventory_OnEquippedListChanged(object sender, System.EventArgs e)
+    private void Inventory_OnItemEquip(object sender, System.EventArgs e)
     {
         RefreshInventoryItems();
     }
-    
+
+    private void Inventory_OnItemUnequip(object o, System.EventArgs e)
+    {
+        UnequipItem();
+    }
+
+    private void UnequipItem()
+    {
+        switch (inventory.lastRemoved.itemType)
+        {
+            default:
+            case Item.ItemType.Boots:
+                Image image = bootEquipSlot.Find("Image").GetComponent<Image>();
+                image.sprite = emptyItem;
+                equippedBoots = null;
+                break;
+        }
+    }
     private void RefreshInventoryItems()
     {
         // foreach (Transform child in itemSlotContainer)
@@ -55,13 +76,17 @@ public class EquippedUI : MonoBehaviour
             switch (item.itemType)
             {
                 default:
+                    slot = null;
+                    break;
                 case Item.ItemType.Boots:
                     Debug.Log("Entered");
                     slot = bootEquipSlot;
+                    equippedBoots = item;
                     break;
                     
             }
 
+            if (slot == null) continue;
             slot.GetComponent<Button_UI>().ClickFunc = () =>
             {
                 inventory.UnequipItem(item);
@@ -76,8 +101,7 @@ public class EquippedUI : MonoBehaviour
 
             Image image = slot.Find("Image").GetComponent<Image>();
             image.sprite = item.GetSprite();
-            
-            
+
             // var itemSlot = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             // itemSlot.gameObject.SetActive(true);
             //
