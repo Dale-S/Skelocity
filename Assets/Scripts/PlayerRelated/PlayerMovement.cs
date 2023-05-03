@@ -16,7 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 playerPos;
 
     //Max Speed Variables
-    private float maxVelocity = 15.0f;
+    private float defaultMaxVelocity = 15.0f;
+    private float maxVelocity;
     private float walkSpeed = 4.0f;
     private float runSpeed = 7.0f;
 
@@ -49,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
     private KeyCode leftKey = KeyCode.A;
     private KeyCode rightKey = KeyCode.D;
     private KeyCode sprint = KeyCode.LeftShift;
+    private KeyCode inventoryKey = KeyCode.I;
+
 
     //Slide variables
     private float maxSlideTime = 0.4f;
@@ -73,12 +76,18 @@ public class PlayerMovement : MonoBehaviour
     //Wall detection variables
     private float wallDetectionDist = 0.8f;
 
+    //Inventory Variables
+    private Inventory inventory;
+    [SerializeField] private UIInventory uiInventory;
+    [SerializeField] private EquippedUI equipUI;
     private void Start()
     {
         playerRB = this.gameObject.GetComponent<Rigidbody>();
         playerObject = GetComponent<Transform>();
         player = this.gameObject;
         playerPos = player.transform.position;
+        maxVelocity = defaultMaxVelocity;
+
         movement = new Vector3(0, 0, 0);
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;
@@ -87,8 +96,27 @@ public class PlayerMovement : MonoBehaviour
         againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0,0.5f,0), new Vector3(1,-0.25f,0), 0.8f);
         clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
+
+        //Start Inventory
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+        uiInventory.SetPlayer(this);
+        
+        equipUI.SetInventory(inventory);
+        equipUI.SetPlayer(this);
+        
+        ItemWorld.spawnItemWorld(new Vector3(10, 2, -0.2f), new Item{itemType = Item.ItemType.Boots, amount = 1, buffValue = 1.05f});
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ItemWorld itemWorld = other.GetComponent<ItemWorld>();
+        if (itemWorld == null) return;
+        //Touching Item
+        inventory.AddItem(itemWorld.GetItem());
+        itemWorld.DestroySelf();
+    }
+
     private void Update()
     {
         playerPos = this.transform.position;
@@ -202,9 +230,19 @@ public class PlayerMovement : MonoBehaviour
         }
         //----------------------------------------------------------------------\\
         
+
+        //Inventory Toggle-------------------------------------------------------\\
+        if (Input.GetKeyDown(inventoryKey))
+        {
+            uiInventory.ChangeInventoryAlpha();
+        }
+        //----------------------------------------------------------------------\\
     }
+    
     void FixedUpdate()
     {
+        //Equipped Items Buff
+        BootsBuff();
         //Walking and Running Control ------------------------------------------\\
         if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
         {
@@ -351,9 +389,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator idleStop()
+    public Vector3 GetPosition()
     {
-        yield return new WaitForSeconds(5);
-        pVelocity = 0;
+        return transform.position;
+    }
+
+    public void BootsBuff()
+    {
+        if (equipUI.equippedBoots == null && maxVelocity != defaultMaxVelocity)
+        {
+            maxVelocity = defaultMaxVelocity;
+        }
+        else if (equipUI.equippedBoots != null && maxVelocity == defaultMaxVelocity)
+        {
+            maxVelocity = defaultMaxVelocity * equipUI.equippedBoots.buffValue;
+        }
     }
 }
