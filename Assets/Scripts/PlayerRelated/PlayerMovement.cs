@@ -14,11 +14,11 @@ public class PlayerMovement : MonoBehaviour
     private GameObject player;
     private Transform playerObject; // for easy scaling for sliding
     private Vector3 playerPos;
-    
+
     //Max Speed Variables
     private float defaultMaxVelocity = 15.0f;
     private float maxVelocity;
-   private float walkSpeed = 4.0f;
+    private float walkSpeed = 4.0f;
     private float runSpeed = 7.0f;
 
     //Jump Variables
@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     private KeyCode sprint = KeyCode.LeftShift;
     private KeyCode inventoryKey = KeyCode.I;
 
+
     //Slide variables
     private float maxSlideTime = 0.4f;
     private float slideForce = 0.075f;
@@ -79,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
     private Inventory inventory;
     [SerializeField] private UIInventory uiInventory;
     [SerializeField] private EquippedUI equipUI;
-    
     private void Start()
     {
         playerRB = this.gameObject.GetComponent<Rigidbody>();
@@ -87,12 +87,12 @@ public class PlayerMovement : MonoBehaviour
         player = this.gameObject;
         playerPos = player.transform.position;
         maxVelocity = defaultMaxVelocity;
+
         movement = new Vector3(0, 0, 0);
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;
         jumps = numOfJumps;
         startingYScale = playerObject.localScale.y;
-        
         againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0,0.5f,0), new Vector3(1,-0.25f,0), 0.8f);
         clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
@@ -120,7 +120,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         playerPos = this.transform.position;
-        
         //Check to see if player is on the ground
         isGrounded = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
         jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
@@ -139,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
             slopeDir = new Vector3(-1, -0.25f, 0);
             clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.left, wallDetectionDist);
         }
+
         if (!againstWall && slope)
         {
             movement.y = 2f;
@@ -151,8 +151,6 @@ public class PlayerMovement : MonoBehaviour
         }
         //----------------------------------------------------------------------\\
         
-        
-
         //Jumping Control-------------------------------------------------------\\
         if (Input.GetKeyDown(jumpKey) && jumpBuffer)
         {
@@ -207,7 +205,7 @@ public class PlayerMovement : MonoBehaviour
         
         if(!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
         {
-            player.transform.localRotation = Quaternion.Euler(0,0,0);
+            player.transform.localRotation = Quaternion.Euler(0,-180,0);
             if (movement.x < 0)
             {
                 return;
@@ -232,6 +230,7 @@ public class PlayerMovement : MonoBehaviour
         }
         //----------------------------------------------------------------------\\
         
+
         //Inventory Toggle-------------------------------------------------------\\
         if (Input.GetKeyDown(inventoryKey))
         {
@@ -239,11 +238,11 @@ public class PlayerMovement : MonoBehaviour
         }
         //----------------------------------------------------------------------\\
     }
+    
     void FixedUpdate()
     {
         //Equipped Items Buff
         BootsBuff();
-
         //Walking and Running Control ------------------------------------------\\
         if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
         {
