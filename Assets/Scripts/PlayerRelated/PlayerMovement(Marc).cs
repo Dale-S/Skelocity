@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.EventSystems;
 using UnityEngine;
 
 
@@ -13,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject player;
     private Transform playerObject; // for easy scaling for sliding
     private Vector3 playerPos;
-    
+
     //Max Speed Variables
     private float maxVelocity = 15.0f;
     private float walkSpeed = 4.0f;
@@ -31,7 +32,9 @@ public class PlayerMovement : MonoBehaviour
 
     //Physics variables
     private float gravity;
-    private Vector3 movement;
+    public Vector3 movement;
+    public Vector3 slopeDir;
+    public int dir = 1;
 
     //Players Current Velocity
     public float pVelocity = 0;
@@ -53,32 +56,22 @@ public class PlayerMovement : MonoBehaviour
     private float slideTimer;
     private float slideYScale = 0.5f;
     private float startingYScale;
-    
-    //Wall Slide and Wall Jump Variables
-    private float wallJumpDelay = 5f;
-    private float wallJumpTimer = 0f;
-    public float wallSlideSpeed = 2f;
-    private float savedPlayerVelocity = -1f;
-    public float yWallForce;
-    public float wallJumpTime;
-    
 
     //Status Variables
-    private bool isGrounded = true;
+    public bool isGrounded = true;
     private bool jumpBuffer = true;
     private bool sprinting = true;
     private bool spacePressed = false;
-    private bool isWallSliding;
-    private bool isWallJumping;
     private bool isSliding = false;
     public bool extraJumps = false;
+    public bool shortHop = false;
     public bool againstWall = false;
     private bool falling = false;
+    public bool slope = false;
+    public bool clip = false; //To check for character clipping on objects when jumping
 
     //Wall detection variables
-    private float wallDetectionDist = 1.5f;
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private LayerMask wallLayer;
+    private float wallDetectionDist = 0.8f;
 
     private void Start()
     {
@@ -91,15 +84,45 @@ public class PlayerMovement : MonoBehaviour
         jumpVel = Mathf.Abs(gravity) * timeToApex;
         jumps = numOfJumps;
         startingYScale = playerObject.localScale.y;
+        againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
+        slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0,0.5f,0), new Vector3(1,-0.25f,0), 0.8f);
+        clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
     }
-
+    
     private void Update()
     {
+        playerPos = this.transform.position;
         //Check to see if player is on the ground
         isGrounded = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
         jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
-        againstWall = Physics.Raycast(this.transform.position, Vector3.forward, wallDetectionDist);
+        slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0,0.5f,0), slopeDir, 0.8f);
+        if (pVelocity > 1)
+        {
+            dir = 1; //Direction = Right
+            againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
+            slopeDir = new Vector3(1, -0.25f, 0);
+            clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
+        }
+        else if (pVelocity < -1)
+        {
+            dir = -1; //Direction = Left
+            againstWall = Physics.Raycast(this.transform.position, Vector3.left, wallDetectionDist);
+            slopeDir = new Vector3(-1, -0.25f, 0);
+            clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.left, wallDetectionDist);
+        }
 
+        if (!againstWall && slope)
+        {
+            movement.y = 2f;
+        }
+        
+        //Anti-Clipping---------------------------------------------------------\\
+        if (clip && !isGrounded && !againstWall)
+        {
+            this.transform.position = playerPos + new Vector3(0.3f * dir, 0.5f, 0);
+        }
+        //----------------------------------------------------------------------\\
+        
         //Jumping Control-------------------------------------------------------\\
         if (Input.GetKeyDown(jumpKey) && jumpBuffer)
         {
@@ -125,17 +148,22 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(jumpKey))
+        if (shortHop)
         {
-            if (!falling)
+            if (Input.GetKeyUp(jumpKey))
             {
-                movement.y = gravity * Time.deltaTime;
+                if (!falling)
+                {
+                    movement.y = gravity * Time.deltaTime;
+                }
             }
         }
+        //--------------------------------------------------------------------\\
         
         //Air Control Code----------------------------------------------------\\
         if(!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
         {
+            player.transform.localRotation = Quaternion.Euler(0,0,0);
             if (movement.x > 0)
             {
                 return;
@@ -149,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
         
         if(!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
         {
+            player.transform.localRotation = Quaternion.Euler(0,-180,0);
             if (movement.x < 0)
             {
                 return;
@@ -173,20 +202,6 @@ public class PlayerMovement : MonoBehaviour
         }
         //----------------------------------------------------------------------\\
         
-        //Check if on Wall and off the ground. If so, slide on the wall.
-        WallSlide();
-        
-        //If Wall Sliding and want to move, Wall Jump;
-        if (((Input.GetKeyDown(rightKey) || Input.GetKeyDown(leftKey)) && isWallSliding) && wallJumpTimer <= 0) //Go in if condition if you haven't wall jumped recently and are wall sliding
-        {
-            Debug.Log("Wall Jump!");
-            WallJump();
-        }
-
-        if (isWallJumping)
-        {
-            playerRB.velocity = new Vector3(-savedPlayerVelocity, yWallForce, playerRB.velocity.z);
-        }
     }
     void FixedUpdate()
     {
@@ -276,13 +291,6 @@ public class PlayerMovement : MonoBehaviour
             Slide(); 
         }
         
-        //Player Wall Jump Delay
-        if (wallJumpTimer > 0)
-        {
-            wallJumpTimer -= Time.deltaTime;
-            // Debug.Log(wallJumpTimer);
-        }
-        
         //Player movement update (!|**Keep At Bottom Of Fixed Update**|!)
         //Update Players Current Velocity to pVelocity
         movement.x = pVelocity;
@@ -299,8 +307,9 @@ public class PlayerMovement : MonoBehaviour
             movement.y += gravity * Time.deltaTime;
             spacePressed = false;
         }
-        else if (isGrounded && !spacePressed)
+        else if (isGrounded && !spacePressed && !slope)
         {
+            falling = false;
             movement.y = 0;
         }
         playerRB.velocity = movement;
@@ -342,48 +351,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsTouchingWall()
+    private IEnumerator idleStop()
     {
-        var objects = Physics.OverlapSphere(wallCheck.position, 0.2f, wallLayer.value);
-        foreach (var variable in (objects))
-        {
-            if (variable.CompareTag("Walls"))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-    private void WallSlide()
-    {
-        if (IsTouchingWall() && !isGrounded && movement.x != 0)
-        {
-            // Debug.Log("Wall Sliding!");
-            if (savedPlayerVelocity == -1f)
-            {
-                savedPlayerVelocity = pVelocity;
-            }
-            isWallSliding = true;
-            movement.y = Mathf.Clamp(playerRB.velocity.y, -wallSlideSpeed, float.MaxValue);
-        }
-        else
-        {
-            isWallSliding = false;
-            savedPlayerVelocity = -1f;
-        }
-    }
-
-    private void WallJump()
-    {
-        wallJumpTimer = wallJumpDelay; 
-        
-        isWallJumping = true;
-        Invoke("SetWallJumpToFalse", wallJumpTime);
-    }
-
-    private void SetWallJumpToFalse()
-    {
-        isWallJumping = false;
+        yield return new WaitForSeconds(5);
+        pVelocity = 0;
     }
 }

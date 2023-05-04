@@ -14,14 +14,14 @@ public class PlayerMovement : MonoBehaviour
     private GameObject player;
     private Transform playerObject; // for easy scaling for sliding
     private Vector3 playerPos;
-
+    
     //Max Speed Variables
     private float maxVelocity = 15.0f;
     private float walkSpeed = 4.0f;
     private float runSpeed = 7.0f;
 
     //Jump Variables
-    private int numOfJumps = 1; //Number of bonus jumps (Ex. 2 = triple jump, 1 = double jump...)
+    private int numOfJumps = 3; //Number of bonus jumps (Ex. 2 = triple jump, 1 = double jump...)
     private int jumps;
     private float groundDetectionHeight = 1.2f;
     private float bufferHeight = 1.85f;
@@ -56,12 +56,23 @@ public class PlayerMovement : MonoBehaviour
     private float slideTimer;
     private float slideYScale = 0.5f;
     private float startingYScale;
+    
+    //Wall Slide and Wall Jump Variables
+    private float wallJumpDelay = 5f;
+    private float wallJumpTimer = 0f;
+    public float wallSlideSpeed = 2f;
+    private float savedPlayerVelocity = -1f;
+    public float yWallForce;
+    public float wallJumpTime;
+    
 
     //Status Variables
     public bool isGrounded = true;
     private bool jumpBuffer = true;
     private bool sprinting = true;
     private bool spacePressed = false;
+    private bool isWallSliding;
+    private bool isWallJumping;
     private bool isSliding = false;
     public bool extraJumps = false;
     public bool shortHop = false;
@@ -72,6 +83,9 @@ public class PlayerMovement : MonoBehaviour
 
     //Wall detection variables
     private float wallDetectionDist = 0.8f;
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
+    public bool wallDebounce = false;
 
     private void Start()
     {
@@ -91,6 +105,11 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update()
     {
+        //Temp fix for demo
+        if (againstWall)
+        {
+            jumps = numOfJumps;
+        }
         playerPos = this.transform.position;
         //Check to see if player is on the ground
         isGrounded = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
@@ -124,68 +143,74 @@ public class PlayerMovement : MonoBehaviour
         //----------------------------------------------------------------------\\
         
         //Jumping Control-------------------------------------------------------\\
-        if (Input.GetKeyDown(jumpKey) && jumpBuffer)
+        if (!isWallSliding)
         {
-            spacePressed = true;
-            if (movement.x < maxVelocity && movement.x > -maxVelocity)
+            if (Input.GetKeyDown(jumpKey) && jumpBuffer)
             {
-                movement.x = movement.x * 1.05f;
-            }
-            pVelocity = movement.x;
-            movement.y = jumpVel;
-        }
-
-        if (extraJumps == true)
-        {
-            if (Input.GetKeyDown(jumpKey) && !jumpBuffer)
-            {
-                if (jumps > 0)
+                spacePressed = true;
+                if (movement.x < maxVelocity && movement.x > -maxVelocity)
                 {
-                    pVelocity = movement.x;
-                    movement.y = jumpVel;
-                    jumps--;
+                    movement.x = movement.x * 1.05f;
+                }
+                pVelocity = movement.x;
+                movement.y = jumpVel;
+            }
+
+            if (extraJumps == true)
+            {
+                if (Input.GetKeyDown(jumpKey) && !jumpBuffer)
+                {
+                    if (jumps > 0)
+                    {
+                        pVelocity = movement.x;
+                        movement.y = jumpVel;
+                        jumps--;
+                    }
                 }
             }
-        }
 
-        if (shortHop)
-        {
-            if (Input.GetKeyUp(jumpKey))
+            if (shortHop)
             {
-                if (!falling)
+                if (Input.GetKeyUp(jumpKey))
                 {
-                    movement.y = gravity * Time.deltaTime;
+                    if (!falling)
+                    {
+                        movement.y = gravity * Time.deltaTime;
+                    }
                 }
             }
         }
         //--------------------------------------------------------------------\\
         
         //Air Control Code----------------------------------------------------\\
-        if(!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
+        if (!isWallSliding)
         {
-            player.transform.localRotation = Quaternion.Euler(0,0,0);
-            if (movement.x > 0)
+            if(!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
             {
-                return;
-            }
+                player.transform.localRotation = Quaternion.Euler(0,0,0);
+                if (movement.x > 0)
+                {
+                    return;
+                }
 
-            if (movement.x < 0)
-            {
-                pVelocity = (movement.x * -1);
+                if (movement.x < 0)
+                {
+                    pVelocity = (movement.x * -1);
+                }
             }
-        }
         
-        if(!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
-        {
-            player.transform.localRotation = Quaternion.Euler(0,-180,0);
-            if (movement.x < 0)
+            if(!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
             {
-                return;
-            }
+                player.transform.localRotation = Quaternion.Euler(0,-180,0);
+                if (movement.x < 0)
+                {
+                    return;
+                }
 
-            if (movement.x > 0)
-            {
-                pVelocity = (movement.x * -1);
+                if (movement.x > 0)
+                {
+                    pVelocity = (movement.x * -1);
+                }
             }
         }
         //----------------------------------------------------------------------\\
@@ -202,9 +227,26 @@ public class PlayerMovement : MonoBehaviour
         }
         //----------------------------------------------------------------------\\
         
+        //Check if on Wall and off the ground. If so, slide on the wall.
+        WallSlide();
+        
+        //If Wall Sliding and want to move, Wall Jump;
+        if ((Input.GetKeyDown(jumpKey) && isWallSliding) && wallJumpTimer <= 0) //Go in if condition if you haven't wall jumped recently and are wall sliding
+        {
+            Debug.Log("Wall Jump!");
+            savedPlayerVelocity = -savedPlayerVelocity;
+            WallJump();
+            player.transform.localRotation = Quaternion.Euler(0, player.transform.localRotation.y + 180, 0);
+            playerRB.velocity = new Vector3(savedPlayerVelocity, yWallForce, 0);
+            pVelocity = savedPlayerVelocity;
+        }
     }
     void FixedUpdate()
     {
+        if (isGrounded)
+        {
+            wallDebounce = false;
+        }
         //Walking and Running Control ------------------------------------------\\
         if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
         {
@@ -291,14 +333,24 @@ public class PlayerMovement : MonoBehaviour
             Slide(); 
         }
         
+        //Player Wall Jump Delay
+        if (wallJumpTimer > 0)
+        {
+            wallJumpTimer -= Time.deltaTime;
+            // Debug.Log(wallJumpTimer);
+        }
+        
         //Player movement update (!|**Keep At Bottom Of Fixed Update**|!)
         //Update Players Current Velocity to pVelocity
-        movement.x = pVelocity;
+        if (!wallDebounce)
+        {
+            movement.x = pVelocity;
+        }
         if (jumpBuffer)
         {
             jumps = numOfJumps;
         }
-        if (!isGrounded)
+        if (!isGrounded && !wallDebounce)
         {
             if (movement.y < 0)
             {
@@ -310,9 +362,13 @@ public class PlayerMovement : MonoBehaviour
         else if (isGrounded && !spacePressed && !slope)
         {
             falling = false;
+            wallDebounce = false;
             movement.y = 0;
         }
-        playerRB.velocity = movement;
+        if (!wallDebounce)
+        {
+            playerRB.velocity = movement;
+        }
         //Debug.Log("Current velocity: " + pVelocity)
     }
 
@@ -351,9 +407,51 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator idleStop()
+    private bool IsTouchingWall()
     {
-        yield return new WaitForSeconds(5);
-        pVelocity = 0;
+        var objects = Physics.OverlapSphere(wallCheck.position, 0.2f, wallLayer.value);
+        foreach (var variable in (objects))
+        {
+            if (variable.CompareTag("Walls"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    private void WallSlide()
+    {
+        if (IsTouchingWall() && !isGrounded && movement.x != 0)
+        {
+            if (!wallDebounce)
+            {
+                Debug.Log("Wall Sliding!");
+                savedPlayerVelocity = pVelocity;
+                wallDebounce = true;
+                isWallSliding = true;
+            }
+            movement.y = Mathf.Clamp(playerRB.velocity.y, -wallSlideSpeed, float.MaxValue);
+        }
+        else
+        {
+            //Debug.Log("Not wall sliding");
+            isWallSliding = false;
+            savedPlayerVelocity = -1f;
+        }
+    }
+
+    private void WallJump()
+    {
+        wallJumpTimer = wallJumpDelay; 
+        
+        isWallJumping = true;
+        Invoke("SetWallJumpToFalse", wallJumpTime);
+        wallDebounce = false;
+    }
+
+    private void SetWallJumpToFalse()
+    {
+        isWallJumping = false;
     }
 }
