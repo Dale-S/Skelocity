@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEditor.Build;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMoveHook : MonoBehaviour
 {
+    public float detectionRadius = 3f;
+    public Color gizmoColor = Color.green;
     public float speed = 1.0f;
     public bool edge;
     public bool wall;
@@ -14,9 +16,11 @@ public class EnemyMovement : MonoBehaviour
     private GameObject enemy;
     private Vector3 enemyPos;
     public bool isGrounded;
+    private Transform playerTransform;
 
     private void Start()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
@@ -41,6 +45,11 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
+        if (Vector3.Distance(transform.position, playerTransform.position) <= detectionRadius)
+        {
+            Debug.DrawLine(transform.position, playerTransform.position, gizmoColor);
+            return;
+        }
         edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 1f);
         wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 0.8f);
         isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
@@ -54,3 +63,9 @@ public class EnemyMovement : MonoBehaviour
         }
         
     }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = gizmoColor;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+}
