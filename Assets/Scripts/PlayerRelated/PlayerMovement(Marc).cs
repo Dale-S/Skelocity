@@ -14,15 +14,14 @@ public class PlayerMovement : MonoBehaviour
     private GameObject player;
     private Transform playerObject; // for easy scaling for sliding
     private Vector3 playerPos;
-    
+
     //Max Speed Variables
-    private float defaultMaxVelocity = 15.0f;
-    private float maxVelocity;
+    private float maxVelocity = 15.0f;
     private float walkSpeed = 4.0f;
     private float runSpeed = 7.0f;
 
     //Jump Variables
-    private int numOfJumps = 3; //Number of bonus jumps (Ex. 2 = triple jump, 1 = double jump...)
+    private int numOfJumps = 1; //Number of bonus jumps (Ex. 2 = triple jump, 1 = double jump...)
     private int jumps;
     private float groundDetectionHeight = 1.2f;
     private float bufferHeight = 1.85f;
@@ -50,8 +49,6 @@ public class PlayerMovement : MonoBehaviour
     private KeyCode leftKey = KeyCode.A;
     private KeyCode rightKey = KeyCode.D;
     private KeyCode sprint = KeyCode.LeftShift;
-    private KeyCode inventoryKey = KeyCode.I;
-
 
     //Slide variables
     private float maxSlideTime = 0.4f;
@@ -59,23 +56,12 @@ public class PlayerMovement : MonoBehaviour
     private float slideTimer;
     private float slideYScale = 0.5f;
     private float startingYScale;
-    
-    //Wall Slide and Wall Jump Variables
-    private float wallJumpDelay = 5f;
-    private float wallJumpTimer = 0f;
-    public float wallSlideSpeed = 2f;
-    private float savedPlayerVelocity = -1f;
-    public float yWallForce;
-    public float wallJumpTime;
-    
 
     //Status Variables
     public bool isGrounded = true;
     private bool jumpBuffer = true;
     private bool sprinting = true;
     private bool spacePressed = false;
-    private bool isWallSliding;
-    private bool isWallJumping;
     private bool isSliding = false;
     public bool extraJumps = false;
     public bool shortHop = false;
@@ -86,22 +72,13 @@ public class PlayerMovement : MonoBehaviour
 
     //Wall detection variables
     private float wallDetectionDist = 0.8f;
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private LayerMask wallLayer;
-    public bool wallDebounce = false;
 
-    //Inventory Variables
-    private Inventory inventory;
-    [SerializeField] private UIInventory uiInventory;
-    [SerializeField] private EquippedUI equipUI;
     private void Start()
     {
         playerRB = this.gameObject.GetComponent<Rigidbody>();
         playerObject = GetComponent<Transform>();
         player = this.gameObject;
         playerPos = player.transform.position;
-        maxVelocity = defaultMaxVelocity;
-
         movement = new Vector3(0, 0, 0);
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;
@@ -110,34 +87,10 @@ public class PlayerMovement : MonoBehaviour
         againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0,0.5f,0), new Vector3(1,-0.25f,0), 0.8f);
         clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
-
-        //Start Inventory
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
-        uiInventory.SetPlayer(this);
-        
-        equipUI.SetInventory(inventory);
-        equipUI.SetPlayer(this);
-        
-        ItemWorld.spawnItemWorld(new Vector3(10, 2, -0.2f), new Item{itemType = Item.ItemType.Boots, amount = 1, buffValue = 1.05f});
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        ItemWorld itemWorld = other.GetComponent<ItemWorld>();
-        if (itemWorld == null) return;
-        //Touching Item
-        inventory.AddItem(itemWorld.GetItem());
-        itemWorld.DestroySelf();
-    }
-
+    
     private void Update()
     {
-        //Temp fix for demo
-        if (againstWall)
-        {
-            jumps = numOfJumps;
-        }
         playerPos = this.transform.position;
         //Check to see if player is on the ground
         isGrounded = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
@@ -171,74 +124,68 @@ public class PlayerMovement : MonoBehaviour
         //----------------------------------------------------------------------\\
         
         //Jumping Control-------------------------------------------------------\\
-        if (!isWallSliding)
+        if (Input.GetKeyDown(jumpKey) && jumpBuffer)
         {
-            if (Input.GetKeyDown(jumpKey) && jumpBuffer)
+            spacePressed = true;
+            if (movement.x < maxVelocity && movement.x > -maxVelocity)
             {
-                spacePressed = true;
-                if (movement.x < maxVelocity && movement.x > -maxVelocity)
-                {
-                    movement.x = movement.x * 1.05f;
-                }
-                pVelocity = movement.x;
-                movement.y = jumpVel;
+                movement.x = movement.x * 1.05f;
             }
+            pVelocity = movement.x;
+            movement.y = jumpVel;
+        }
 
-            if (extraJumps == true)
+        if (extraJumps == true)
+        {
+            if (Input.GetKeyDown(jumpKey) && !jumpBuffer)
             {
-                if (Input.GetKeyDown(jumpKey) && !jumpBuffer)
+                if (jumps > 0)
                 {
-                    if (jumps > 0)
-                    {
-                        pVelocity = movement.x;
-                        movement.y = jumpVel;
-                        jumps--;
-                    }
+                    pVelocity = movement.x;
+                    movement.y = jumpVel;
+                    jumps--;
                 }
             }
+        }
 
-            if (shortHop)
+        if (shortHop)
+        {
+            if (Input.GetKeyUp(jumpKey))
             {
-                if (Input.GetKeyUp(jumpKey))
+                if (!falling)
                 {
-                    if (!falling)
-                    {
-                        movement.y = gravity * Time.deltaTime;
-                    }
+                    movement.y = gravity * Time.deltaTime;
                 }
             }
         }
         //--------------------------------------------------------------------\\
         
         //Air Control Code----------------------------------------------------\\
-        if (!isWallSliding)
+        if(!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
         {
-            if(!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
+            player.transform.localRotation = Quaternion.Euler(0,0,0);
+            if (movement.x > 0)
             {
-                player.transform.localRotation = Quaternion.Euler(0,0,0);
-                if (movement.x > 0)
-                {
-                    return;
-                }
-
-                if (movement.x < 0)
-                {
-                    pVelocity = (movement.x * -1);
-                }
+                return;
             }
-        
-            if(!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
-            {
-                player.transform.localRotation = Quaternion.Euler(0,-180,0);
-                if (movement.x < 0)
-                {
-                    return;
-                }
 
-                if (movement.x > 0)
-                {
-                    pVelocity = (movement.x * -1);
-                }
+            if (movement.x < 0)
+            {
+                pVelocity = (movement.x * -1);
+            }
+        }
+        
+        if(!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
+        {
+            player.transform.localRotation = Quaternion.Euler(0,-180,0);
+            if (movement.x < 0)
+            {
+                return;
+            }
+
+            if (movement.x > 0)
+            {
+                pVelocity = (movement.x * -1);
             }
         }
         //----------------------------------------------------------------------\\
@@ -255,36 +202,9 @@ public class PlayerMovement : MonoBehaviour
         }
         //----------------------------------------------------------------------\\
         
-        //Check if on Wall and off the ground. If so, slide on the wall.
-        WallSlide();
-        
-        //If Wall Sliding and want to move, Wall Jump;
-        if ((Input.GetKeyDown(jumpKey) && isWallSliding) && wallJumpTimer <= 0) //Go in if condition if you haven't wall jumped recently and are wall sliding
-        {
-            Debug.Log("Wall Jump!");
-            savedPlayerVelocity = -savedPlayerVelocity;
-            WallJump();
-            player.transform.localRotation = Quaternion.Euler(0, player.transform.localRotation.y + 180, 0);
-            playerRB.velocity = new Vector3(savedPlayerVelocity, yWallForce, 0);
-            pVelocity = savedPlayerVelocity;
-        }
-        
-        //Inventory Toggle-------------------------------------------------------\\
-        if (Input.GetKeyDown(inventoryKey))
-        {
-            uiInventory.ChangeInventoryAlpha();
-        }
-        //----------------------------------------------------------------------\\
     }
-    
     void FixedUpdate()
     {
-        if (isGrounded)
-        {
-            wallDebounce = false;
-        }
-        //Equipped Items Buff
-        BootsBuff();
         //Walking and Running Control ------------------------------------------\\
         if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
         {
@@ -371,24 +291,14 @@ public class PlayerMovement : MonoBehaviour
             Slide(); 
         }
         
-        //Player Wall Jump Delay
-        if (wallJumpTimer > 0)
-        {
-            wallJumpTimer -= Time.deltaTime;
-            // Debug.Log(wallJumpTimer);
-        }
-        
         //Player movement update (!|**Keep At Bottom Of Fixed Update**|!)
         //Update Players Current Velocity to pVelocity
-        if (!wallDebounce)
-        {
-            movement.x = pVelocity;
-        }
+        movement.x = pVelocity;
         if (jumpBuffer)
         {
             jumps = numOfJumps;
         }
-        if (!isGrounded && !wallDebounce)
+        if (!isGrounded)
         {
             if (movement.y < 0)
             {
@@ -400,13 +310,9 @@ public class PlayerMovement : MonoBehaviour
         else if (isGrounded && !spacePressed && !slope)
         {
             falling = false;
-            wallDebounce = false;
             movement.y = 0;
         }
-        if (!wallDebounce)
-        {
-            playerRB.velocity = movement;
-        }
+        playerRB.velocity = movement;
         //Debug.Log("Current velocity: " + pVelocity)
     }
 
@@ -445,66 +351,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsTouchingWall()
+    private IEnumerator idleStop()
     {
-        var objects = Physics.OverlapSphere(wallCheck.position, 0.2f, wallLayer.value);
-        foreach (var variable in (objects))
-        {
-            if (variable.CompareTag("Walls"))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-    private void WallSlide()
-    {
-        if (IsTouchingWall() && !isGrounded && movement.x != 0)
-        {
-            if (!wallDebounce)
-            {
-                Debug.Log("Wall Sliding!");
-                savedPlayerVelocity = pVelocity;
-                wallDebounce = true;
-                isWallSliding = true;
-            }
-            movement.y = Mathf.Clamp(playerRB.velocity.y, -wallSlideSpeed, float.MaxValue);
-        }
-        else
-        {
-            //Debug.Log("Not wall sliding");
-            isWallSliding = false;
-            savedPlayerVelocity = -1f;
-        }
-    }
-
-    private void WallJump()
-    {
-        wallJumpTimer = wallJumpDelay; 
-        
-        isWallJumping = true;
-        Invoke("SetWallJumpToFalse", wallJumpTime);
-        wallDebounce = false;
-    }
-
-    private void SetWallJumpToFalse()
-    {
-        isWallJumping = false;
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
-    public void BootsBuff()
-    {
-        if (equipUI.equippedBoots == null && maxVelocity != defaultMaxVelocity)
-        {
-            maxVelocity = defaultMaxVelocity;
-        }
-        else if (equipUI.equippedBoots != null && maxVelocity == defaultMaxVelocity)
-        {
-            maxVelocity = defaultMaxVelocity * equipUI.equippedBoots.buffValue;
-        }
+        yield return new WaitForSeconds(5);
+        pVelocity = 0;
     }
 }

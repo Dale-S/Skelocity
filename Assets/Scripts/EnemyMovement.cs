@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    
     public float speed = 1.0f;
     public bool edge;
     public bool wall;
@@ -55,4 +54,3 @@ public class EnemyMovement : MonoBehaviour
         }
         
     }
-}
