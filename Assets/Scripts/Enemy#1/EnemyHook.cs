@@ -18,7 +18,7 @@ public class EnemyHook : MonoBehaviour
     void Start()
     {
         enemyMove = GetComponentInParent<EnemyMoveHook>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTransform = GameObject.Find("Player").transform;
     }
 
     void Update()

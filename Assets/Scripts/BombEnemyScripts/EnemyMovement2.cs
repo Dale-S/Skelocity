@@ -15,7 +15,7 @@ public class EnemyMovement2 : MonoBehaviour
     private Vector3 enemyPos;
     public bool isGrounded;
     
-    public GameObject player;
+    private GameObject player;
     public GameObject explosionPrefab;
 
     public float distanceThreshold = 5f;
@@ -32,7 +32,7 @@ public class EnemyMovement2 : MonoBehaviour
         enemy = gameObject;
         enemyRB = gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
-        
+        player = GameObject.Find("Player");
     }
 
     private void FixedUpdate()
