@@ -18,9 +18,11 @@ public class EnemyMoveHook : MonoBehaviour
     public bool isGrounded;
     private Transform playerTransform;
 
+    public float enemyHP = 30;
+
     private void Start()
     {
-        playerTransform = GameObject.Find("Player").transform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
@@ -45,6 +47,11 @@ public class EnemyMoveHook : MonoBehaviour
 
     private void Update()
     {
+        if (enemyHP <= 0)
+        {
+            Debug.Log("Hook Dead");
+            Destroy(this.gameObject);
+        }
         if (Vector3.Distance(transform.position, playerTransform.position) <= detectionRadius)
         {
             Debug.DrawLine(transform.position, playerTransform.position, gizmoColor);
@@ -62,6 +69,16 @@ public class EnemyMoveHook : MonoBehaviour
             enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
         }
         
+    }
+    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bonk") )
+        {
+            Debug.Log(enemyHP);
+            enemyHP -= 10;
+            Debug.Log("Ouch from hook");
+        }
     }
     void OnDrawGizmosSelected()
     {

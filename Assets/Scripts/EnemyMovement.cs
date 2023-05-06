@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    
     public float speed = 1.0f;
     public bool edge;
     public bool wall;
@@ -14,6 +15,7 @@ public class EnemyMovement : MonoBehaviour
     private GameObject enemy;
     private Vector3 enemyPos;
     public bool isGrounded;
+    public float enemyHP = 20;
 
     private void Start()
     {
@@ -38,9 +40,24 @@ public class EnemyMovement : MonoBehaviour
             walkDir = -walkDir;
         }
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bonk") )
+        {
+            Debug.Log(enemyHP);
+            enemyHP -= 10;
+            Debug.Log("Ouch from shooter");
+        }
+    }
+    
+    
     private void Update()
     {
+        if (enemyHP <= 0)
+        {
+            Debug.Log("Shooter Dead");
+            Destroy(this.gameObject);
+        }
         edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 1f);
         wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 0.8f);
         isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
@@ -54,5 +71,4 @@ public class EnemyMovement : MonoBehaviour
         }
         
     }
-    
 }
