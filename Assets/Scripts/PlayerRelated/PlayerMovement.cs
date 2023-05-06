@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //public PlayerStats PS;
+    public PlayerStats PS;
     //Game Objects
     private Rigidbody playerRB;
     private GameObject player;
@@ -60,12 +60,8 @@ public class PlayerMovement : MonoBehaviour
     private float startingYScale;
 
     //Wall Slide and Wall Jump Variables
-    private float wallSlideDelay = 3f;
-    private float wallJumpTimer = 0f;
-    public float wallSlideSpeed = 2f;
-    private float savedPlayerVelocity = -1f;
-    public float yWallForce;
-    public float wallJumpTime;
+    public bool wallStickActive = false;
+    public float savedSpeed = 0f; 
 
 
     //Status Variables
@@ -73,8 +69,6 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpBuffer = true;
     private bool sprinting = true;
     private bool spacePressed = false;
-    private bool isWallSliding;
-    private bool isWallJumping;
     private bool isSliding = false;
     public bool extraJumps = false;
     public bool shortHop = false;
@@ -82,12 +76,13 @@ public class PlayerMovement : MonoBehaviour
     private bool falling = false;
     public bool slope = false;
     public bool clip = false; //To check for character clipping on objects when jumping
+    public bool wallSliding = false;
+    public bool headHit = false;
 
     //Wall detection variables
     private float wallDetectionDist = 0.8f;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
-    public bool wallDebounce = false;
 
     //Inventory Variables
     private Inventory inventory;
@@ -100,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         playerObject = GetComponent<Transform>();
         player = this.gameObject;
         playerPos = player.transform.position;
-       //maxVelocity = PS.defMaxVelocity;
+        maxVelocity = PS.defMaxVelocity;
         movement = new Vector3(0, 0, 0);
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;
@@ -109,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
         againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), new Vector3(1, -0.25f, 0), 0.8f);
         clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
+        slopeDir = new Vector3(1, 0.25f, 0);
 
         /*//Start Inventory
         inventory = new Inventory();
@@ -140,29 +136,51 @@ public class PlayerMovement : MonoBehaviour
         {
             wallStick();
         }
+
+        if (wallStickActive)
+        {
+            if (Input.GetKeyDown(jumpKey))
+            {
+                wallSliding = false;
+                wallStickActive = false;
+                dir = -dir;
+                slopeDir = -slopeDir;
+                pVelocity = -savedSpeed;
+                movement.x = pVelocity;
+                movement.y = jumpVel + 1;
+            }
+        }
+        
         playerPos = this.transform.position;
         //Check to see if player is on the ground
         isGrounded = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
+        headHit = Physics.Raycast(this.transform.position, Vector3.up, groundDetectionHeight);
         jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), slopeDir, 0.8f);
+        againstWall = Physics.Raycast(this.transform.position, new Vector3(dir,0,0), wallDetectionDist);
+        clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), new Vector3(dir,0,0), wallDetectionDist);
         if (pVelocity > 1)
         {
             dir = 1; //Direction = Right
-            againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
-            slopeDir = new Vector3(1, -0.25f, 0);
-            clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
+            slopeDir = new Vector3(1, 0.25f, 0);
         }
         else if (pVelocity < -1)
         {
             dir = -1; //Direction = Left
-            againstWall = Physics.Raycast(this.transform.position, Vector3.left, wallDetectionDist);
             slopeDir = new Vector3(-1, -0.25f, 0);
-            clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.left, wallDetectionDist);
         }
 
         if (!againstWall && slope)
         {
             movement.y = 2f;
+        }
+
+        if (headHit)
+        {
+            if (!falling)
+            {
+                movement.y = gravity * Time.deltaTime;
+            }
         }
 
         //Anti-Clipping---------------------------------------------------------\\
@@ -171,36 +189,34 @@ public class PlayerMovement : MonoBehaviour
             this.transform.position = playerPos + new Vector3(0.3f * dir, 0.5f, 0);
         }
         //----------------------------------------------------------------------\\
-
+        if (!againstWall)
+        {
+            wallStickActive = false;
+        }
         //Jumping Control-------------------------------------------------------\\
-        if (!isWallSliding)
+        if (!wallStickActive)
         {
             if (Input.GetKeyDown(jumpKey) && jumpBuffer)
             {
                 spacePressed = true;
                 if (movement.x < maxVelocity && movement.x > -maxVelocity)
-                {
+                { 
                     movement.x = movement.x * 1.05f;
                 }
 
                 pVelocity = movement.x;
-                if (!wallDebounce)
-                {
-                    movement.y = jumpVel;
-                }
+                movement.y = jumpVel;
             }
 
             if (extraJumps == true)
             {
-                if (Input.GetKeyDown(jumpKey) && !jumpBuffer)
+                if (Input.GetKeyDown(jumpKey) && !jumpBuffer && !wallStickActive)
                 {
                     if (jumps > 0)
                     {
+                        falling = false;
                         pVelocity = movement.x;
-                        if (!wallDebounce)
-                        {
-                            movement.y = jumpVel;
-                        }
+                        movement.y = jumpVel;
                         jumps--;
                     }
                 }
@@ -221,32 +237,32 @@ public class PlayerMovement : MonoBehaviour
 
         //Air Control Code----------------------------------------------------\\
         if (!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
+        {
+            player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            if (movement.x > 0)
             {
-                player.transform.localRotation = Quaternion.Euler(0, 0, 0);
-                if (movement.x > 0)
-                {
-                    return;
-                }
-
-                if (movement.x < 0)
-                {
-                    pVelocity = (movement.x * -1);
-                }
+                return;
             }
 
-            if (!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
-            {
-                player.transform.localRotation = Quaternion.Euler(0, -180, 0);
-                if (movement.x < 0)
-                {
-                    return;
-                }
-
-                if (movement.x > 0)
-                {
-                    pVelocity = (movement.x * -1);
-                }
+            if (movement.x < 0) 
+            { 
+                pVelocity = (movement.x * -1);
             }
+        }
+
+        if (!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
+        {
+            player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            if (movement.x < 0)
+            {
+                return;
+            }
+
+            if (movement.x > 0)
+            {
+                pVelocity = (movement.x * -1);
+            }
+        }
             //----------------------------------------------------------------------\\
 
         //Sliding Control-------------------------------------------------------\\
@@ -261,8 +277,6 @@ public class PlayerMovement : MonoBehaviour
         }
         //----------------------------------------------------------------------\\
 
-        //Check if on Wall and off the ground. If so, slide on the wall.
-
         //Inventory Toggle-------------------------------------------------------\\
         /*if (Input.GetKeyDown(inventoryKey))
         {
@@ -275,7 +289,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            wallDebounce = false;
+            wallStickActive = false;
+            wallSliding = false;
         }
 
         //Equipped Items Buff
@@ -316,7 +331,7 @@ public class PlayerMovement : MonoBehaviour
 
         if ((Input.GetKey(leftKey) && !Input.GetKey(rightKey)) && isGrounded)
         {
-            player.transform.localRotation = Quaternion.Euler(0, -180, 0);
+            player.transform.localRotation = Quaternion.Euler(0, 180, 0);
             if (Input.GetKey(sprint))
             {
                 sprinting = true;
@@ -369,30 +384,31 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //Player movement update (!|**Keep At Bottom Of Fixed Update**|!)
-        
-        movement.x = pVelocity;
-        
-        if (jumpBuffer)
+        if (!wallStickActive)
         {
-            jumps = numOfJumps;
-        }
-        if (!isGrounded && !wallDebounce)
-        {
-            if (movement.y < 0)
+            movement.x = pVelocity;
+        
+            if (jumpBuffer)
             {
-                falling = true;
+                jumps = numOfJumps;
             }
+            if (!isGrounded && !wallStickActive)
+            {
+                if (movement.y < 0)
+                {
+                    falling = true;
+                }
 
-            movement.y += gravity * Time.deltaTime;
-            spacePressed = false;
+                movement.y += gravity * Time.deltaTime;
+                spacePressed = false;
+            }
+            else if (isGrounded && !spacePressed && !slope)
+            {
+                falling = false;
+                movement.y = 0;
+            }
+            playerRB.velocity = movement;
         }
-        else if (isGrounded && !spacePressed && !slope)
-        {
-            falling = false;
-            wallDebounce = false;
-            movement.y = 0;
-        }
-        playerRB.velocity = movement;
         //Debug.Log("Current velocity: " + pVelocity)
     }
 
@@ -445,28 +461,37 @@ public class PlayerMovement : MonoBehaviour
     }*/
     private void wallStick()
     {
-        if (!wallDebounce)
+        if (!wallStickActive)
         {
-            wallDebounce = true;
-            savedPlayerVelocity = pVelocity;
-            pVelocity = 0;
+            Debug.Log("Wall stick activated");
+            wallSliding = false;
+            wallStickActive = true;
+            savedSpeed = movement.x;
             movement.x = 0;
+            pVelocity = 0;
             movement.y = 0;
-            Invoke("wallSlide", wallSlideDelay);
         }
+
+        if (wallStickActive && wallSliding)
+        {
+            movement.y = -2;
+        }
+
+        playerRB.velocity = movement;
+        StartCoroutine(startWallSlide());
     }
 
-    private void wallSlide()
+    private IEnumerator startWallSlide()
     {
-        Debug.Log("sliding down wall");
-        if (!isGrounded)
+        yield return new WaitForSeconds(1);
+        if (wallStickActive)
         {
-            movement.y = -wallSlideSpeed;
+            wallSliding = true;
         }
         else
         {
-            movement.y = 0;
-            wallDebounce = false;
+            wallSliding = false;
         }
+        StopCoroutine(startWallSlide());
     }
 }
