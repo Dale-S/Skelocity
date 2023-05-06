@@ -6,7 +6,7 @@ using UnityEditor.EventSystems;
 using UnityEngine;
 
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementMarc : MonoBehaviour
 {
 
     //Game Objects

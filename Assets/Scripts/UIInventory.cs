@@ -11,7 +11,7 @@ public class UIInventory : MonoBehaviour
     private Inventory inventory;
     private Transform itemSlotContainer;
     private Transform itemSlotTemplate;
-    private PlayerMovement player;
+    //private PlayerMovement player;
 
     private void Start()
     {
@@ -21,7 +21,7 @@ public class UIInventory : MonoBehaviour
 
     public void SetPlayer(PlayerMovement player)
     {
-        this.player = player;
+        //this.player = player;
     }
     
     public void SetInventory(Inventory inventory)
@@ -71,7 +71,7 @@ public class UIInventory : MonoBehaviour
             itemSlot.GetComponent<Button_UI>().MouseRightClickFunc = () =>
             {
                 inventory.RemoveItem(item);
-                ItemWorld.DropItem(player.GetPosition(), item);
+               // ItemWorld.DropItem(player.GetPosition(), item);
             };
             
             Image image = itemSlot.Find("Image").GetComponent<Image>();
@@ -89,4 +89,5 @@ public class UIInventory : MonoBehaviour
             
         }
     }
+    
 }

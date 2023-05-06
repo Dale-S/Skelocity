@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public PlayerStats PS;
+    //public PlayerStats PS;
     //Game Objects
     private Rigidbody playerRB;
     private GameObject player;
@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         playerObject = GetComponent<Transform>();
         player = this.gameObject;
         playerPos = player.transform.position;
-        maxVelocity = PS.defMaxVelocity;
+       //maxVelocity = PS.defMaxVelocity;
         movement = new Vector3(0, 0, 0);
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;

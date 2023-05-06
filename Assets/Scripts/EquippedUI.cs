@@ -96,7 +96,7 @@ public class EquippedUI : MonoBehaviour
             slot.GetComponent<Button_UI>().MouseRightClickFunc = () =>
             {
                 inventory.UnequipItem(item);
-                ItemWorld.DropItem(player.GetPosition(), item);
+                //ItemWorld.DropItem(player.GetPosition(), item);
             };
 
             Image image = slot.Find("Image").GetComponent<Image>();
