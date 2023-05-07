@@ -145,8 +145,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Exit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 127ef1718f8534b4787f20d0ad6a64db, type: 2}
+  m_sharedMaterial: {fileID: 4987146596084388083, guid: 127ef1718f8534b4787f20d0ad6a64db, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -774,8 +774,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Teleport to Hub
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 127ef1718f8534b4787f20d0ad6a64db, type: 2}
+  m_sharedMaterial: {fileID: 4987146596084388083, guid: 127ef1718f8534b4787f20d0ad6a64db, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -909,8 +909,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Change Audio
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 127ef1718f8534b4787f20d0ad6a64db, type: 2}
+  m_sharedMaterial: {fileID: 4987146596084388083, guid: 127ef1718f8534b4787f20d0ad6a64db, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1179,8 +1179,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sound
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 127ef1718f8534b4787f20d0ad6a64db, type: 2}
+  m_sharedMaterial: {fileID: 4987146596084388083, guid: 127ef1718f8534b4787f20d0ad6a64db, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
