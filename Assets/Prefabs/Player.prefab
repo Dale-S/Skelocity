@@ -12,11 +12,22 @@ GameObject:
   m_Layer: 0
   m_Name: QuickRigCharacter_Hips
   m_TagString: Untagged
+  - component: {fileID: 1904820482273357728}
+  - component: {fileID: 1904820482273357729}
+  - component: {fileID: 1904820482273357734}
+  - component: {fileID: 1904820482273357735}
+  - component: {fileID: 1904820482273357732}
+  - component: {fileID: 1904820482273357733}
+  - component: {fileID: 1904820482273357731}
+  m_Layer: 3
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2799396472356293991
+
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

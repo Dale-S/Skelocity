@@ -9,7 +9,7 @@ public class MarksmenScanner : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float burstInterval = 0.2f;
     [SerializeField] private float bulletSpeed = 10f;
-    [SerializeField] private int bulletsInBurst = 3;
+    //[SerializeField] private int bulletsInBurst = 3;
 
     private bool playerSeen = false;
     private bool isShooting = false;

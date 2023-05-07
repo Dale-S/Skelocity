@@ -116,11 +116,13 @@ public class EnemyMovement2 : MonoBehaviour
         Destroy(effectIns, 2f);
         Destroy(gameObject);
     }
+    
     void dealtDamage(float damageDealt)
     {
         enemyHP -= damageDealt;
         Debug.Log(enemyHP);
         Debug.Log("Ouch from bomb");
+
     }
     private void OnDrawGizmos()
     {

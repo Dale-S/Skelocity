@@ -11,12 +11,20 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
-        vel = PM.pVelocity;
-        if (vel < 0)
-        {
-            vel = -vel;
+        if (!PM.wallStickActive)
+        { 
+            vel = PM.pVelocity;
+            if (vel < 0)
+            {
+                vel = -vel;
+            }
+            cam.transform.position = new Vector3(player.transform.position.x, (player.transform.position.y + 4), -10f);
+            cam.GetComponent<Camera>().fieldOfView = 60 + vel;
         }
-        cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 4, -10f);
-        cam.GetComponent<Camera>().fieldOfView = 60 + vel;
+        else
+        {
+            cam.transform.position = new Vector3(player.transform.position.x, (player.transform.position.y + 4), -10f);
+            cam.GetComponent<Camera>().fieldOfView = 60 + Mathf.Abs(PM.savedSpeed);
+        }
     }
 }
