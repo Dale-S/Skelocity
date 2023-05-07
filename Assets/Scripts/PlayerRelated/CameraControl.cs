@@ -18,12 +18,12 @@ public class CameraControl : MonoBehaviour
             {
                 vel = -vel;
             }
-            cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10f);
+            cam.transform.position = new Vector3(player.transform.position.x, (player.transform.position.y + 4), -10f);
             cam.GetComponent<Camera>().fieldOfView = 60 + vel;
         }
         else
         {
-            cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10f);
+            cam.transform.position = new Vector3(player.transform.position.x, (player.transform.position.y + 4), -10f);
             cam.GetComponent<Camera>().fieldOfView = 60 + Mathf.Abs(PM.savedSpeed);
         }
     }
