@@ -92,6 +92,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private UIInventory uiInventory;
     [SerializeField] private EquippedUI equipUI;
 
+    //Animator
+    Animator animator;
+
+    //Model
+    public GameObject playerModel;
+
     private void Start()
     {
         playerRB = this.gameObject.GetComponent<Rigidbody>();
@@ -109,6 +115,8 @@ public class PlayerMovement : MonoBehaviour
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), new Vector3(1, -0.25f, 0), 0.8f);
         clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
         slopeDir = new Vector3(1, 0.25f, 0);
+
+        animator = playerModel.GetComponent<Animator>();
 
         /*//Start Inventory
         inventory = new Inventory();
@@ -287,6 +295,13 @@ public class PlayerMovement : MonoBehaviour
             uiInventory.ChangeInventoryAlpha();
         }*/
         //----------------------------------------------------------------------\\
+
+        //Animations-------------------------------------------------------\\
+        animator.SetFloat("Speed", Math.Abs(pVelocity));
+        animator.SetBool("Sliding", isSliding);
+        if (!wallStickActive)
+            animator.SetBool("Jumping", !isGrounded);
+    
     }
 
     void FixedUpdate()
