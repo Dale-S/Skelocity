@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     //Walk and Run Speed Increase (For speed ramp up)
     private float speedIncWalk = 0.25f;
     private float speedIncRun = 0.50f;
+    private bool sprintDebounce = false;
 
     //Control Definitions
     private KeyCode slideKey = KeyCode.LeftControl;
@@ -58,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
     private float slideTimer;
     private float slideYScale = 0.5f;
     private float startingYScale;
+    private CapsuleCollider playerCollider;
 
     //Wall Slide and Wall Jump Variables
     public bool wallStickActive = false;
@@ -78,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
     public bool clip = false; //To check for character clipping on objects when jumping
     public bool wallSliding = false;
     public bool headHit = false;
+    public bool toggleSprint = false;
 
     //Wall detection variables
     private float wallDetectionDist = 0.8f;
@@ -100,7 +103,8 @@ public class PlayerMovement : MonoBehaviour
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;
         jumps = numOfJumps;
-        startingYScale = playerObject.localScale.y;
+        playerCollider = player.transform.GetComponent<CapsuleCollider>();
+        startingYScale = playerCollider.height;
         againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), new Vector3(1, -0.25f, 0), 0.8f);
         clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
@@ -293,6 +297,11 @@ public class PlayerMovement : MonoBehaviour
             wallSliding = false;
         }
 
+        if (Input.GetKeyUp(sprint))
+        {
+            sprintDebounce = false;
+        }
+
         //Equipped Items Buff
         //BootsBuff();
         //Walking and Running Control ------------------------------------------\\
@@ -301,11 +310,32 @@ public class PlayerMovement : MonoBehaviour
             player.transform.localRotation = Quaternion.Euler(0, 0, 0);
             if (Input.GetKey(sprint))
             {
-                sprinting = true;
+                if (toggleSprint)
+                {
+                    if (!sprintDebounce)
+                    {
+                        sprintDebounce = true;
+                        if (!sprinting)
+                        {
+                            sprinting = true;
+                        }
+                        else
+                        {
+                            sprinting = false;
+                        }
+                    }
+                }
+                else
+                {
+                    sprinting = true;
+                }
             }
             else
             {
-                sprinting = false;
+                if (!toggleSprint)
+                {
+                    sprinting = false;
+                }
             }
 
             if (sprinting)
@@ -334,11 +364,32 @@ public class PlayerMovement : MonoBehaviour
             player.transform.localRotation = Quaternion.Euler(0, 180, 0);
             if (Input.GetKey(sprint))
             {
-                sprinting = true;
+                if (toggleSprint)
+                {
+                    if (!sprintDebounce)
+                    {
+                        if (!sprinting)
+                        {
+                            sprinting = true;
+                        }
+                        else
+                        {
+                            sprinting = false;
+                        }
+                        sprintDebounce = true;
+                    }
+                }
+                else
+                {
+                    sprinting = true;
+                }
             }
             else
             {
-                sprinting = false;
+                if (!toggleSprint)
+                {
+                    sprinting = false;
+                }
             }
 
             if (sprinting)
@@ -414,18 +465,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartSlide()
     {
+        playerCollider.height = slideYScale;
         isSliding = true;
-
-        playerObject.localScale = new Vector3(playerObject.localScale.x, slideYScale, playerObject.localScale.z);
-        //playerRB.AddForce(Vector3.down * 1f, ForceMode.Impulse);
-
         slideTimer = maxSlideTime;
     }
 
     private void StopSlide()
     {
+        playerCollider.height = startingYScale;
         isSliding = false;
-        playerObject.localScale = new Vector3(playerObject.localScale.x, startingYScale, playerObject.localScale.z);
     }
 
     private void Slide()
@@ -475,6 +523,11 @@ public class PlayerMovement : MonoBehaviour
         if (wallStickActive && wallSliding)
         {
             movement.y = -2;
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            movement.y = -12;
         }
 
         playerRB.velocity = movement;
