@@ -70,15 +70,12 @@ public class EnemyMoveHook : MonoBehaviour
         }
         
     }
-    
-    void OnTriggerEnter(Collider other)
+
+    void dealtDamage(float damageDealt)
     {
-        if (other.CompareTag("Bonk") )
-        {
-            Debug.Log(enemyHP);
-            enemyHP -= 10;
-            Debug.Log("Ouch from hook");
-        }
+        enemyHP -= damageDealt;
+        Debug.Log(enemyHP);
+        Debug.Log("Ouch from hook");
     }
     void OnDrawGizmosSelected()
     {

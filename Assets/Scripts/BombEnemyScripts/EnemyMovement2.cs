@@ -116,14 +116,13 @@ public class EnemyMovement2 : MonoBehaviour
         Destroy(effectIns, 2f);
         Destroy(gameObject);
     }
-    void OnTriggerEnter(Collider other)
+    
+    void dealtDamage(float damageDealt)
     {
-        if (other.CompareTag("Bonk") )
-        {
-            Debug.Log(enemyHP);
-            enemyHP -= 10;
-            Debug.Log("Ouch from bomb");
-        }
+        enemyHP -= damageDealt;
+        Debug.Log(enemyHP);
+        Debug.Log("Ouch from bomb");
+
     }
     private void OnDrawGizmos()
     {
