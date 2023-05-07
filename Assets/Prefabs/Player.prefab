@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5792354388431414667}
   - component: {fileID: 5792354388431414668}
   - component: {fileID: 5792354388431414669}
-  - component: {fileID: 5792354388431414665}
   - component: {fileID: 5792354388431414664}
-  m_Layer: 0
+  - component: {fileID: 8658081631107711970}
+  - component: {fileID: 1475174892665405304}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -32,8 +33,7 @@ Transform:
   m_LocalPosition: {x: 2, y: 2, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 324542783254634883}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -101,35 +101,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5792354388431414665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5792354388431414670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 801462bbeac84ef46b950b96743efe43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movement: {x: 0, y: 0, z: 0}
-  slopeDir: {x: 0, y: 0, z: 0}
-  dir: 1
-  pVelocity: 0
-  wallSlideSpeed: 2
-  yWallForce: 10
-  wallJumpTime: 3
-  isGrounded: 1
-  extraJumps: 1
-  shortHop: 0
-  againstWall: 0
-  slope: 0
-  clip: 0
-  wallCheck: {fileID: 324542783254634883}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!54 &5792354388431414664
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -141,39 +112,67 @@ Rigidbody:
   m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 1
---- !u!1 &6202052403345928333
-GameObject:
+--- !u!114 &8658081631107711970
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 324542783254634883}
-  m_Layer: 0
-  m_Name: WallCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &324542783254634883
-Transform:
+  m_GameObject: {fileID: 5792354388431414670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58d057d37c359ee479c70d10cdd1a138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxVelocity: 15
+  hearts: 2
+  attackRange: 3
+  damage: 5
+  sprintSpeed: 7
+  walkSpeed: 4
+  defMaxVelocity: 15
+  defDamage: 5
+  defWalk: 4
+  defSprint: 7
+  defAttackRange: 3
+  defHearts: 2
+  extraJumps: 1
+  defExtraJumps: 1
+--- !u!114 &1475174892665405304
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6202052403345928333}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5792354388431414666}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 5792354388431414670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfac049869a5fc249bae9f64629df726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PS: {fileID: 8658081631107711970}
+  movement: {x: 0, y: 0, z: 0}
+  slopeDir: {x: 0, y: 0, z: 0}
+  dir: 1
+  pVelocity: 0
+  wallStickActive: 0
+  savedSpeed: 0
+  isGrounded: 1
+  extraJumps: 0
+  shortHop: 0
+  againstWall: 0
+  slope: 0
+  clip: 0
+  wallSliding: 0
+  headHit: 0
+  wallCheck: {fileID: 0}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  uiInventory: {fileID: 0}
+  equipUI: {fileID: 0}
