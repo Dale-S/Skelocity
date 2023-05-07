@@ -26,6 +26,8 @@ public class EnemyMovement2 : MonoBehaviour
     private bool playerDetected = false;
     private bool enemyStop = false;
     private float distanceToPlayer;
+    
+    public float enemyHP = 40;
 
     private void Start()
     {
@@ -57,6 +59,11 @@ public class EnemyMovement2 : MonoBehaviour
 
     private void Update()
     {
+        if (enemyHP <= 0)
+        {
+            Debug.Log("Bomb Dead");
+            Destroy(this.gameObject);
+        }
         edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 1f);
         wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 0.8f);
         isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
@@ -109,7 +116,12 @@ public class EnemyMovement2 : MonoBehaviour
         Destroy(effectIns, 2f);
         Destroy(gameObject);
     }
-    
+    void dealtDamage(float damageDealt)
+    {
+        enemyHP -= damageDealt;
+        Debug.Log(enemyHP);
+        Debug.Log("Ouch from bomb");
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
