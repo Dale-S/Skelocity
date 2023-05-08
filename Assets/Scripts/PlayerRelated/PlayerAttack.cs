@@ -9,12 +9,18 @@ public class PlayerAttack : MonoBehaviour
     public float damageDealt = 0f;
     private bool attackCooldown = false;
     private float dTimer = 2f;
-    private float timer = 2f;
+    private float timer = 1f;
+
+    //Animator
+    Animator animator;
+
+    //Model
+    public GameObject playerModel;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = playerModel.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -38,6 +44,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void attack()
     {
+        animator.SetTrigger("Attacking");
+        animator.SetTrigger("Attacking");
         timer = dTimer;
         attackCooldown = true;
         damageDealt = PS.damage * Mathf.Abs(PM.pVelocity);
@@ -46,5 +54,6 @@ public class PlayerAttack : MonoBehaviour
         {
             hit.transform.SendMessage("dealtDamage", damageDealt);
         }
+        
     }
 }
