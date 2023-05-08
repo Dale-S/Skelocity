@@ -11,6 +11,9 @@ public class PlayerAttack : MonoBehaviour
     private float dTimer = 2f;
     private float timer = 1f;
 
+    //Attack Sound Effect
+    private AudioSource attackSound;
+    
     //Animator
     Animator animator;
 
@@ -21,6 +24,7 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         animator = playerModel.GetComponent<Animator>();
+        attackSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,6 +48,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void attack()
     {
+        attackSound.Play();
         animator.SetTrigger("Attacking");
         animator.SetTrigger("Attacking");
         timer = dTimer;

@@ -29,6 +29,9 @@ public class EnemyMovement2 : MonoBehaviour
     
     public float enemyHP = 40;
 
+    //Enemy Death Sound Effect
+    public GameObject deathSoundPrefab;
+    
     //Animator
     Animator animator;
 
@@ -68,7 +71,9 @@ public class EnemyMovement2 : MonoBehaviour
     {
         if (enemyHP <= 0)
         {
+            GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Bomb Dead");
+            Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
         edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 1f);

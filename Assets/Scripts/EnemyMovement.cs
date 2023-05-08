@@ -16,6 +16,9 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 enemyPos;
     public bool isGrounded;
     public float enemyHP = 20;
+    
+    //Enemy Death Effect
+    public GameObject deathSoundPrefab;
 
     //Animator
     Animator animator;
@@ -63,7 +66,9 @@ public class EnemyMovement : MonoBehaviour
     {
         if (enemyHP <= 0)
         {
+            GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Shooter Dead");
+            Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
         edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 1f);
