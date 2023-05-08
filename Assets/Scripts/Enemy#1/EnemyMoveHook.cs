@@ -23,12 +23,19 @@ public class EnemyMoveHook : MonoBehaviour
     //Enemy Death Sound Effect
     public GameObject deathSoundPrefab;
 
+    //Animator
+    Animator animator;
+
+    //Model
+    public GameObject enemyModel;
+
     private void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
+        animator = enemyModel.GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -73,7 +80,8 @@ public class EnemyMoveHook : MonoBehaviour
         {
             enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
         }
-        
+
+        animator.SetFloat("Speed", Math.Abs(speed)); 
     }
 
     void dealtDamage(float damageDealt)
