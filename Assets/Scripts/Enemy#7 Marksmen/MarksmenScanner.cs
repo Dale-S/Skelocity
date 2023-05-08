@@ -53,7 +53,6 @@ public class MarksmenScanner : MonoBehaviour
                 Debug.Log("Enemy spotted");
                 if (!isShooting)
                 {
-                    animator.SetBool("Casting", playerSeen);
                     StartCoroutine(ShootBurst());
                 }
             }
@@ -71,6 +70,8 @@ public class MarksmenScanner : MonoBehaviour
     IEnumerator ShootBurst()
     {
         isShooting = true;
+
+        animator.SetTrigger("Casting");
 
         // First shot
         ShootBullet();

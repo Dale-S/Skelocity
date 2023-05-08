@@ -48,7 +48,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void attack()
     {
-        attackSound.Play();
+        attackSound.PlayDelayed(0.5f);
         animator.SetTrigger("Attacking");
         animator.SetTrigger("Attacking");
         timer = dTimer;
