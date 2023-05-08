@@ -98,6 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1912288071231519811}
-  player: {fileID: 2799396472677623505, guid: 132c10c73dd77074082b4f2ebca10b59, type: 3}
-  PM: {fileID: 2799396472677623514, guid: 132c10c73dd77074082b4f2ebca10b59, type: 3}
+  player: {fileID: 8897681063432605964, guid: 6e86066f3a0206749b17542a0e74d677, type: 3}
+  PM: {fileID: 8897681063432605959, guid: 6e86066f3a0206749b17542a0e74d677, type: 3}
   vel: 0

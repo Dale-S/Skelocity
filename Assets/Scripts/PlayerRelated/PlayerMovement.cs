@@ -173,11 +173,13 @@ public class PlayerMovement : MonoBehaviour
         clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), new Vector3(dir,0,0), wallDetectionDist);
         if (pVelocity > 1)
         {
+            player.transform.localRotation = Quaternion.Euler(0, 0, 0);
             dir = 1; //Direction = Right
             slopeDir = new Vector3(1, 0.25f, 0);
         }
         else if (pVelocity < -1)
         {
+            player.transform.localRotation = Quaternion.Euler(0, 180, 0);
             dir = -1; //Direction = Left
             slopeDir = new Vector3(-1, -0.25f, 0);
         }
@@ -250,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
         //Air Control Code----------------------------------------------------\\
         if (!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
         {
-            player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            
             if (movement.x > 0)
             {
                 return;
@@ -264,7 +266,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
         {
-            player.transform.localRotation = Quaternion.Euler(0, 180, 0);
             if (movement.x < 0)
             {
                 return;
@@ -322,7 +323,6 @@ public class PlayerMovement : MonoBehaviour
         //Walking and Running Control ------------------------------------------\\
         if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
         {
-            player.transform.localRotation = Quaternion.Euler(0, 0, 0);
             if (Input.GetKey(sprint))
             {
                 if (toggleSprint)
@@ -376,7 +376,6 @@ public class PlayerMovement : MonoBehaviour
 
         if ((Input.GetKey(leftKey) && !Input.GetKey(rightKey)) && isGrounded)
         {
-            player.transform.localRotation = Quaternion.Euler(0, 180, 0);
             if (Input.GetKey(sprint))
             {
                 if (toggleSprint)
