@@ -119,6 +119,8 @@ MonoBehaviour:
   edge: 0
   wall: 0
   isGrounded: 0
+  enemyHP: 30
+  deathSoundPrefab: {fileID: 5873556173675448593, guid: 838220ca89f865e4ab8845d5f2566990, type: 3}
 --- !u!54 &5412667241739197162
 Rigidbody:
   m_ObjectHideFlags: 0

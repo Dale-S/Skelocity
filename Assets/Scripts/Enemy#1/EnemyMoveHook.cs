@@ -19,6 +19,9 @@ public class EnemyMoveHook : MonoBehaviour
     private Transform playerTransform;
 
     public float enemyHP = 30;
+    
+    //Enemy Death Sound Effect
+    public GameObject deathSoundPrefab;
 
     private void Start()
     {
@@ -49,7 +52,9 @@ public class EnemyMoveHook : MonoBehaviour
     {
         if (enemyHP <= 0)
         {
+            GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Hook Dead");
+            Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
         if (Vector3.Distance(transform.position, playerTransform.position) <= detectionRadius)
