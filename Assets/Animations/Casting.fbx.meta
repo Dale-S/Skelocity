@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 913c053b8fee91248aef64070d45a534
+guid: 7fb7ac553b63f9a4ebec50f362caba12
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -19,7 +19,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Inbetween bone
       rotation in copied configuration does not match rotation in animation file:\n\t'QuickRigCharacter_Neck'
-      : rotation error = 0.611413 deg\n"
+      : rotation error = 0.611441 deg\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
@@ -27,7 +27,6 @@ ModelImporter:
       animation that will be discarded.\n\t'QuickRigCharacter_RightLeg' has translation
       animation that will be discarded.\n\t'QuickRigCharacter_Neck' is inbetween
       humanoid transforms and has rotation animation that will be discarded.\n\t'QuickRigCharacter_LeftArm'
-      has translation animation that will be discarded.\n\t'QuickRigCharacter_LeftForeArm'
       has translation animation that will be discarded.\n\t'QuickRigCharacter_RightArm'
       has translation animation that will be discarded.\n\t'QuickRigCharacter_RightForeArm'
       has translation animation that will be discarded.\n"
@@ -44,11 +43,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Jump
+      name: Casting
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 1057
-      lastFrame: 1111
+      firstFrame: 1361
+      lastFrame: 1500
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
