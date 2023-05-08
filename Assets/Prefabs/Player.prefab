@@ -39569,6 +39569,7 @@ MonoBehaviour:
   PS: {fileID: 8897681063432605956}
   PM: {fileID: 8897681063432605959}
   damageDealt: 0
+  playerModel: {fileID: 8897681063499013317}
 --- !u!1 &8897681063445876108
 GameObject:
   m_ObjectHideFlags: 0
