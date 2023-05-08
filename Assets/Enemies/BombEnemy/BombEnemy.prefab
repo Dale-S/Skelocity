@@ -138,6 +138,7 @@ MonoBehaviour:
   explosionRadius: 4.5
   explosionDelay: 1
   enemyHP: 40
+  deathSoundPrefab: {fileID: 5873556173675448593, guid: 838220ca89f865e4ab8845d5f2566990, type: 3}
   enemyModel: {fileID: 919132147814684534}
 --- !u!1001 &942504133
 PrefabInstance:

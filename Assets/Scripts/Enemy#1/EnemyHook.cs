@@ -14,10 +14,14 @@ public class EnemyHook : MonoBehaviour
     private bool isPlayerCaught = false;
     private float hookTimer = 0f;
     private float detectionTimer = 0f;
+    
+    //Hook Sound Effect
+    private AudioSource hookSound;
 
     void Start()
     {
         enemyMove = GetComponentInParent<EnemyMoveHook>();
+        hookSound = GetComponent<AudioSource>();
         playerTransform = GameObject.Find("Player").transform;
     }
 
@@ -78,6 +82,7 @@ public class EnemyHook : MonoBehaviour
 
     void LaunchHook()
     {
+        hookSound.Play();
         transform.position = Vector3.MoveTowards(transform.position, playerTransform.position, hookSpeed * Time.deltaTime);
     }
 
