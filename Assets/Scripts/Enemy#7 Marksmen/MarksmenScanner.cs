@@ -13,6 +13,9 @@ public class MarksmenScanner : MonoBehaviour
 
     private bool playerSeen = false;
     private bool isShooting = false;
+    
+    //Source Effect
+    private AudioSource shootSound;
 
     //Animator
     Animator animator;
@@ -23,6 +26,7 @@ public class MarksmenScanner : MonoBehaviour
     private void Start()
     {
         animator = enemyModel.GetComponent<Animator>();
+        shootSound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -88,6 +92,7 @@ public class MarksmenScanner : MonoBehaviour
 
     void ShootBullet()
     {
+        shootSound.Play();
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
         bulletRb.velocity = -transform.right * bulletSpeed;
