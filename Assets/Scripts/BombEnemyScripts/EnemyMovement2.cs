@@ -29,12 +29,19 @@ public class EnemyMovement2 : MonoBehaviour
     
     public float enemyHP = 40;
 
+    //Animator
+    Animator animator;
+
+    //Model
+    public GameObject enemyModel;
+
     private void Start()
     {
         enemy = gameObject;
         enemyRB = gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
         player = GameObject.Find("Player");
+        animator = enemyModel.GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -91,6 +98,7 @@ public class EnemyMovement2 : MonoBehaviour
                 enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
             }
         }
+        animator.SetFloat("Speed", Math.Abs(speed));
         
         Explosion();
     }
@@ -102,6 +110,7 @@ public class EnemyMovement2 : MonoBehaviour
             if (distanceToPlayer < explosionRadius)
             {
                 enemyStop = true;
+                speed = 0;
                 Invoke("Explode", explosionDelay);
                 isExploded = true;
             }

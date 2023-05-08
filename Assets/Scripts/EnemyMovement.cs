@@ -17,11 +17,19 @@ public class EnemyMovement : MonoBehaviour
     public bool isGrounded;
     public float enemyHP = 20;
 
+    //Animator
+    Animator animator;
+
+    //Model
+    public GameObject enemyModel;
+
     private void Start()
     {
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
+
+        animator = enemyModel.GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -70,5 +78,6 @@ public class EnemyMovement : MonoBehaviour
             enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
         }
         
+        animator.SetFloat("Speed", Math.Abs(speed));
     }
 }

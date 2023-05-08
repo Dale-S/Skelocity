@@ -14,6 +14,17 @@ public class MarksmenScanner : MonoBehaviour
     private bool playerSeen = false;
     private bool isShooting = false;
 
+    //Animator
+    Animator animator;
+
+    //Model
+    public GameObject enemyModel;
+
+    private void Start()
+    {
+        animator = enemyModel.GetComponent<Animator>();
+    }
+
     void Update()
     {
         ScanForPlayer();
@@ -38,6 +49,7 @@ public class MarksmenScanner : MonoBehaviour
                 Debug.Log("Enemy spotted");
                 if (!isShooting)
                 {
+                    animator.SetBool("Casting", playerSeen);
                     StartCoroutine(ShootBurst());
                 }
             }
