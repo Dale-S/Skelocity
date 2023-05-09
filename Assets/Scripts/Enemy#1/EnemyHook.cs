@@ -14,15 +14,17 @@ public class EnemyHook : MonoBehaviour
     private bool isPlayerCaught = false;
     private float hookTimer = 0f;
     private float detectionTimer = 0f;
-    
+    private GameObject player;
+
     //Hook Sound Effect
     private AudioSource hookSound;
 
     void Start()
     {
+        player = GameObject.Find("Player");
         enemyMove = GetComponentInParent<EnemyMoveHook>();
         hookSound = GetComponent<AudioSource>();
-        playerTransform = GameObject.Find("Player").transform;
+        playerTransform = player.transform;
     }
 
     void Update()
@@ -44,6 +46,7 @@ public class EnemyHook : MonoBehaviour
                     isPlayerCaught = false;
                     isHookActive = false;
                     Debug.Log("Player released by the hook");
+                    playerTransform.SendMessage("damagePlayer");
                 }
             }
             else
@@ -88,7 +91,6 @@ public class EnemyHook : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        
         if (other.CompareTag("Player") && isHookActive && isPlayerCaught != true)
         {
             Debug.Log("I got you");

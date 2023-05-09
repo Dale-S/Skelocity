@@ -32,14 +32,14 @@ public class DugeonGeneration : MonoBehaviour
             for (int j = 0; j < dungeonSize; j++)
             {
                 currPoint = new Vector3(x, y, z);
-                Debug.Log("J = " + j + "  I = " + i);
-                Debug.Log("Current Point = " + currPoint);
+                //Debug.Log("J = " + j + "  I = " + i);
+                //Debug.Log("Current Point = " + currPoint);
                 if (currPoint.y == 0 && currPoint.x == 0)
                 {
                     int rand = 0;
                     rand = Random.Range(0, All4.Length);
                     Instantiate(All4[rand], currPoint, Quaternion.identity);
-                    Debug.Log("All4 Instantiated");
+                    //Debug.Log("All4 Instantiated");
                 }
                 else if (currPoint.y == -30 * (dungeonSize / 2))
                 {
@@ -48,21 +48,21 @@ public class DugeonGeneration : MonoBehaviour
                         int rand = 0;
                         rand = Random.Range(0, TR.Length);
                         Instantiate(TR[rand], currPoint, Quaternion.identity);
-                        Debug.Log("TR Instantiated");
+                        //Debug.Log("TR Instantiated");
                     }
                     else if (currPoint.x == 49.75 * (dungeonSize - 1))
                     {
                         int rand = 0;
                         rand = Random.Range(0, LT.Length);
                         Instantiate(LT[rand], currPoint, Quaternion.identity);
-                        Debug.Log("LT Instantiated");
+                        //Debug.Log("LT Instantiated");
                     }
                     else
                     {
                         int rand = 0;
                         rand = Random.Range(0, LTR.Length);
                         Instantiate(LTR[rand], currPoint, Quaternion.identity);
-                        Debug.Log("LTR Instantiated");
+                        //Debug.Log("LTR Instantiated");
                     }
                 }
                 else if (currPoint.y == 30 * (dungeonSize / 2))
@@ -72,21 +72,21 @@ public class DugeonGeneration : MonoBehaviour
                         int rand = 0;
                         rand = Random.Range(0, RB.Length);
                         Instantiate(RB[rand], currPoint, Quaternion.identity);
-                        Debug.Log("RB Instantiated");
+                        //Debug.Log("RB Instantiated");
                     }
                     else if (currPoint.x == 49.75 * (dungeonSize - 1))
                     {
                         int rand = 0;
                         rand = Random.Range(0, LB.Length);
                         Instantiate(LB[rand], currPoint, Quaternion.identity);
-                        Debug.Log("LB Instantiated");
+                        //Debug.Log("LB Instantiated");
                     }
                     else
                     {
                         int rand = 0;
                         rand = Random.Range(0, LRB.Length);
                         Instantiate(LRB[rand], currPoint, Quaternion.identity);
-                        Debug.Log("LRB Instantiated");
+                        //Debug.Log("LRB Instantiated");
                     }
                 }
                 else
@@ -96,21 +96,21 @@ public class DugeonGeneration : MonoBehaviour
                         int rand = 0;
                         rand = Random.Range(0, TRB.Length);
                         Instantiate(TRB[rand], currPoint, Quaternion.identity);
-                        Debug.Log("TRB Instantiated");
+                        //Debug.Log("TRB Instantiated");
                     }
                     else if (currPoint.x == 49.75 * (dungeonSize - 1))
                     {
                         int rand = 0;
                         rand = Random.Range(0, LTB.Length);
                         Instantiate(LTB[rand], currPoint, Quaternion.identity);
-                        Debug.Log("LTB Instantiated");
+                        //Debug.Log("LTB Instantiated");
                     }
                     else
                     {
                         int rand = 0;
                         rand = Random.Range(0, All4.Length);
                         Instantiate(All4[rand], currPoint, Quaternion.identity);
-                        Debug.Log("All4 Instantiated");
+                        //Debug.Log("All4 Instantiated");
                     }
                 }
 

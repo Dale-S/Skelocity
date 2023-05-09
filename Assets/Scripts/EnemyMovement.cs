@@ -16,6 +16,7 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 enemyPos;
     public bool isGrounded;
     public float enemyHP = 20;
+    private MarksmenScanner MS;
     
     //Enemy Death Effect
     public GameObject deathSoundPrefab;
@@ -31,14 +32,14 @@ public class EnemyMovement : MonoBehaviour
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
-
+        MS = enemy.GetComponent<MarksmenScanner>();
         animator = enemyModel.GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
         enemyPos = enemy.transform.position;
-        if ((wall || !edge) && isGrounded)
+        if ((wall || !edge) && isGrounded && !MS.isShooting)
         {
             if (walkDir > 0)
             {
@@ -51,14 +52,12 @@ public class EnemyMovement : MonoBehaviour
             walkDir = -walkDir;
         }
     }
-    void OnTriggerEnter(Collider other)
+    
+    void dealtDamage(float damageDealt)
     {
-        if (other.CompareTag("Bonk") )
-        {
-            Debug.Log(enemyHP);
-            enemyHP -= 10;
-            Debug.Log("Ouch from shooter");
-        }
+        enemyHP -= damageDealt;
+        Debug.Log(enemyHP);
+        Debug.Log("Ouch from marksman");
     }
     
     
@@ -80,7 +79,14 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
+            if (!MS.isShooting)
+            {
+                enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
+            }
+            else
+            {
+                enemyRB.velocity = new Vector3(0, 0, 0);
+            }
         }
         
         animator.SetFloat("Speed", Math.Abs(speed));

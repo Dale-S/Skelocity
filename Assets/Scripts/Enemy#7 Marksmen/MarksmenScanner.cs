@@ -12,7 +12,7 @@ public class MarksmenScanner : MonoBehaviour
     //[SerializeField] private int bulletsInBurst = 3;
 
     private bool playerSeen = false;
-    private bool isShooting = false;
+    public bool isShooting = false;
     
     //Source Effect
     private AudioSource shootSound;
