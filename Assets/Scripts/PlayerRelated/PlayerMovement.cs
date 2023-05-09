@@ -298,10 +298,10 @@ public class PlayerMovement : MonoBehaviour
         //----------------------------------------------------------------------\\
 
         //Animations-------------------------------------------------------\\
-        animator.SetFloat("Speed", Math.Abs(pVelocity));
+        if(isGrounded)
+            animator.SetFloat("Speed", Math.Abs(pVelocity));
         animator.SetBool("Sliding", isSliding);
-        if (!wallStickActive)
-            animator.SetBool("Jumping", !isGrounded);
+        animator.SetBool("Jumping", !isGrounded);
     
     }
 
