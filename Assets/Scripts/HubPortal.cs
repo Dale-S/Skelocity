@@ -10,6 +10,12 @@ public class HubPortal : MonoBehaviour
     public Image img;
     public AnimationCurve curve;
     public string sceneToGoTo;
+    private AudioSource portalSound;
+
+    private void Start()
+    {
+        portalSound = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,6 +42,7 @@ public class HubPortal : MonoBehaviour
     
     IEnumerator FadeOut(string scene)
     {
+        portalSound.Play();
         var t = 0f;
 
         while (t < 1f)
