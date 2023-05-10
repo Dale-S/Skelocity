@@ -15,6 +15,7 @@ public class EnemyMovement2 : MonoBehaviour
     private GameObject enemy;
     private Vector3 enemyPos;
     public bool isGrounded;
+    private GameObject levelManager;
     
     private GameObject player;
     public GameObject explosionPrefab;
@@ -27,8 +28,7 @@ public class EnemyMovement2 : MonoBehaviour
     private bool playerDetected = false;
     private bool enemyStop = false;
     private float distanceToPlayer;
-
-    private PlayerHealth PH;
+    
     public float enemyHP = 40;
 
     //Enemy Death Sound Effect
@@ -47,13 +47,15 @@ public class EnemyMovement2 : MonoBehaviour
         enemyPos = enemy.transform.position;
         player = GameObject.FindGameObjectWithTag("Player");
         animator = enemyModel.GetComponent<Animator>();
-        PH = player.GetComponent<PlayerHealth>();
+        levelManager = GameObject.Find("LevelManager");
     }
 
     private void FixedUpdate()
     {
         enemyPos = enemy.transform.position;
-        
+        edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 2f);
+        wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 1f);
+        isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         
         if ((wall || !edge) && isGrounded)
@@ -76,13 +78,11 @@ public class EnemyMovement2 : MonoBehaviour
         {
             GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Bomb Dead");
+            levelManager.GetComponent<EnemyCount>().count -= 1;
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
-        edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 2f);
-        wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 1f);
-        isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
-        
+
         if (distanceToPlayer <= distanceThreshold)
         {
             playerDetected = true;
@@ -133,6 +133,7 @@ public class EnemyMovement2 : MonoBehaviour
             player.SendMessage("damagePlayer");
         }
         GameObject effectIns = (GameObject) Instantiate(explosionPrefab, transform.position, transform.rotation);
+        levelManager.GetComponent<EnemyCount>().count -= 1;
         Destroy(effectIns, 2f);
         Destroy(gameObject);
     }
