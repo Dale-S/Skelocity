@@ -41,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
         if (health <= 0)
         {
             //Kill player and send back to the hub
-            PM.disabled = true;
+            //PM.disabled = true;
             playerModel.SetActive(false);
             SceneManager.LoadScene("Hub");
         }
