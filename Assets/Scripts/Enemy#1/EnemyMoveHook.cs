@@ -17,6 +17,7 @@ public class EnemyMoveHook : MonoBehaviour
     private Vector3 enemyPos;
     public bool isGrounded;
     private Transform playerTransform;
+    private GameObject levelManager;
 
     public float enemyHP = 30;
     
@@ -36,10 +37,14 @@ public class EnemyMoveHook : MonoBehaviour
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
         animator = enemyModel.GetComponent<Animator>();
+        levelManager = GameObject.Find("LevelManager");
     }
 
     private void FixedUpdate()
     {
+        edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.65f, 0), 2f);
+        wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 1f);
+        isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
         enemyPos = enemy.transform.position;
         if ((wall || !edge) && isGrounded)
         {
@@ -61,6 +66,7 @@ public class EnemyMoveHook : MonoBehaviour
         {
             GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Hook Dead");
+            levelManager.GetComponent<EnemyCount>().count -= 1;
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
@@ -69,9 +75,6 @@ public class EnemyMoveHook : MonoBehaviour
             Debug.DrawLine(transform.position, playerTransform.position, gizmoColor);
             return;
         }
-        edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 1f);
-        wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 0.8f);
-        isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
         if (!isGrounded)
         {
             enemyRB.velocity = new Vector3(0, -10f, 0);

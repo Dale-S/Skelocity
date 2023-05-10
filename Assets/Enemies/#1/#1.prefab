@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 5412667241739197166}
   - component: {fileID: 5412667241739197163}
   - component: {fileID: 5412667241739197162}
+  - component: {fileID: 2721596716190379912}
   m_Layer: 0
   m_Name: '#1'
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1b64c49b8b55e7040a335afd5339a22e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122,7 +123,7 @@ MonoBehaviour:
   isGrounded: 0
   enemyHP: 30
   deathSoundPrefab: {fileID: 5873556173675448593, guid: 838220ca89f865e4ab8845d5f2566990, type: 3}
-  enemyModel: {fileID: 0}
+  enemyModel: {fileID: 1035770185582179077}
 --- !u!54 &5412667241739197162
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,11 +135,23 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2721596716190379912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5412667241739197165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8d6f6e65e0aba4291c7e28fa578fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5412667242030833379
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +217,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1b64c49b8b55e7040a335afd5339a22e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -419,6 +432,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3460683671890157555, guid: 995ae092ef46a5749a4ea3db537aa155, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4194d60a4cfa2c741b7f5c55e5b6ffd4, type: 2}
     - target: {fileID: 919132149155446097, guid: 995ae092ef46a5749a4ea3db537aa155, type: 3}
       propertyPath: m_Name
       value: Skeleton Hand
@@ -514,5 +531,10 @@ PrefabInstance:
 --- !u!4 &365948060194351551 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3987940879056010970, guid: 5bcc1db746708ec44b1e82d988f80cf5, type: 3}
+  m_PrefabInstance: {fileID: 3624299064029665125}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1035770185582179077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4329036441776825440, guid: 5bcc1db746708ec44b1e82d988f80cf5, type: 3}
   m_PrefabInstance: {fileID: 3624299064029665125}
   m_PrefabAsset: {fileID: 0}
