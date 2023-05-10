@@ -101,8 +101,11 @@ public class PlayerMovement : MonoBehaviour
     //Model
     public GameObject playerModel;
 
+    int ignoreMe;
+
     private void Start()
     {
+        ignoreMe =~ LayerMask.GetMask("clothManipulator");
         playerRB = this.gameObject.GetComponent<Rigidbody>();
         playerObject = GetComponent<Transform>();
         player = this.gameObject;
@@ -114,9 +117,9 @@ public class PlayerMovement : MonoBehaviour
         jumps = numOfJumps;
         playerCollider = player.transform.GetComponent<CapsuleCollider>();
         startingYScale = playerCollider.height;
-        againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
+        againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist, ignoreMe);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), new Vector3(1, -0.25f, 0), 0.8f);
-        clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
+        clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist, ignoreMe);
         slopeDir = new Vector3(1, 0.25f, 0);
 
         animator = playerModel.GetComponent<Animator>();
@@ -165,12 +168,12 @@ public class PlayerMovement : MonoBehaviour
                 movement.y = jumpVel + 1;
             }
         }
-        
+
         playerPos = this.transform.position;
         //Check to see if player is on the ground
-        Ray1 = Physics.Raycast(this.transform.position - new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight);
-        Ray2 = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
-        Ray3 = Physics.Raycast(this.transform.position + new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight);
+        Ray1 = Physics.Raycast(this.transform.position - new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight, ignoreMe);
+        Ray2 = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight, ignoreMe);
+        Ray3 = Physics.Raycast(this.transform.position + new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight, ignoreMe);
         if(Ray1 || Ray2 || Ray3){
             isGrounded = true;
         }
@@ -178,10 +181,10 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
         }
         headHit = Physics.Raycast(this.transform.position, Vector3.up, groundDetectionHeight);
-        jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
+        jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight, ignoreMe);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), slopeDir, 0.8f);
-        againstWall = Physics.Raycast(this.transform.position, new Vector3(dir,0,0), wallDetectionDist);
-        clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), new Vector3(dir,0,0), wallDetectionDist);
+        againstWall = Physics.Raycast(this.transform.position, new Vector3(dir,0,0), wallDetectionDist, ignoreMe);
+        clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), new Vector3(dir,0,0), wallDetectionDist, ignoreMe);
         if (pVelocity > 1)
         {
             player.transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -239,11 +242,11 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (jumps > 0)
                     {
+                        animator.SetTrigger("DoubleJumping");
                         falling = false;
                         pVelocity = movement.x;
                         movement.y = jumpVel;
                         jumps--;
-                        animator.SetTrigger("DoubleJumping");
                     }
                 }
             }
