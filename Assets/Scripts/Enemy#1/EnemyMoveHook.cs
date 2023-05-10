@@ -80,7 +80,6 @@ public class EnemyMoveHook : MonoBehaviour
         {
             enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
         }
-
         animator.SetFloat("Speed", Math.Abs(speed)); 
     }
 

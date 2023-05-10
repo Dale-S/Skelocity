@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Build;
 using UnityEngine;
 
@@ -26,7 +27,8 @@ public class EnemyMovement2 : MonoBehaviour
     private bool playerDetected = false;
     private bool enemyStop = false;
     private float distanceToPlayer;
-    
+
+    private PlayerHealth PH;
     public float enemyHP = 40;
 
     //Enemy Death Sound Effect
@@ -43,8 +45,9 @@ public class EnemyMovement2 : MonoBehaviour
         enemy = gameObject;
         enemyRB = gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         animator = enemyModel.GetComponent<Animator>();
+        PH = player.GetComponent<PlayerHealth>();
     }
 
     private void FixedUpdate()
@@ -119,13 +122,16 @@ public class EnemyMovement2 : MonoBehaviour
                 Invoke("Explode", explosionDelay);
                 isExploded = true;
             }
-
             playerDetected = false;
         }
     }
 
     void Explode()
     {
+        if (distanceToPlayer < explosionRadius)
+        {
+            player.SendMessage("damagePlayer");
+        }
         GameObject effectIns = (GameObject) Instantiate(explosionPrefab, transform.position, transform.rotation);
         Destroy(effectIns, 2f);
         Destroy(gameObject);
@@ -136,7 +142,6 @@ public class EnemyMovement2 : MonoBehaviour
         enemyHP -= damageDealt;
         Debug.Log(enemyHP);
         Debug.Log("Ouch from bomb");
-
     }
     private void OnDrawGizmos()
     {
