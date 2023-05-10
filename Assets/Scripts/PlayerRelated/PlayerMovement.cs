@@ -68,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
 
     //Status Variables
     public bool isGrounded = true;
-    public bool disabled = false;
     private bool jumpBuffer = true;
     private bool sprinting = true;
     private bool spacePressed = false;
@@ -82,6 +81,9 @@ public class PlayerMovement : MonoBehaviour
     public bool wallSliding = false;
     public bool headHit = false;
     public bool toggleSprint = false;
+    public bool Ray1 = false;
+    public bool Ray2 = false;
+    public bool Ray3 = false;
 
     //Wall detection variables
     private float wallDetectionDist = 0.8f;
@@ -98,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Model
     public GameObject playerModel;
-    
+
     private void Start()
     {
         playerRB = this.gameObject.GetComponent<Rigidbody>();
@@ -145,132 +147,142 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if(!disabled){ 
-            if (!isGrounded && againstWall)
-            {
-                wallStick();
-            }
+        if (!isGrounded && againstWall)
+        {
+            wallStick();
+        }
 
-            if (wallStickActive)
+        if (wallStickActive)
+        {
+            if (Input.GetKeyDown(jumpKey))
             {
-                if (Input.GetKeyDown(jumpKey))
-                {
-                    wallSliding = false;
-                    wallStickActive = false;
-                    dir = -dir;
-                    slopeDir = -slopeDir;
-                    pVelocity = -savedSpeed;
-                    movement.x = pVelocity;
-                    movement.y = jumpVel + 1;
-                }
-            }
-            
-            playerPos = this.transform.position;
-            //Check to see if player is on the ground
-            isGrounded = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
-            headHit = Physics.Raycast(this.transform.position, Vector3.up, groundDetectionHeight);
-            jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
-            slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), slopeDir, 0.8f);
-            againstWall = Physics.Raycast(this.transform.position, new Vector3(dir,0,0), wallDetectionDist);
-            clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), new Vector3(dir,0,0), wallDetectionDist);
-            if (pVelocity > 1)
-            {
-                player.transform.localRotation = Quaternion.Euler(0, 0, 0);
-                dir = 1; //Direction = Right
-                slopeDir = new Vector3(1, 0.25f, 0);
-            }
-            else if (pVelocity < -1)
-            {
-                player.transform.localRotation = Quaternion.Euler(0, 180, 0);
-                dir = -1; //Direction = Left
-                slopeDir = new Vector3(-1, -0.25f, 0);
-            }
-
-            if (!againstWall && slope)
-            {
-                movement.y = 2f;
-            }
-
-            if (headHit)
-            {
-                if (!falling)
-                {
-                    movement.y = gravity * Time.deltaTime;
-                }
-            }
-
-            //Anti-Clipping---------------------------------------------------------\\
-            if (clip && !isGrounded && !againstWall)
-            {
-                this.transform.position = playerPos + new Vector3(0.3f * dir, 0.5f, 0);
-            }
-            //----------------------------------------------------------------------\\
-            if (!againstWall)
-            {
+                wallSliding = false;
                 wallStickActive = false;
+                dir = -dir;
+                slopeDir = -slopeDir;
+                pVelocity = -savedSpeed;
+                movement.x = pVelocity;
+                movement.y = jumpVel + 1;
             }
-            //Jumping Control-------------------------------------------------------\\
-            if (!wallStickActive)
+        }
+        
+        playerPos = this.transform.position;
+        //Check to see if player is on the ground
+        Ray1 = Physics.Raycast(this.transform.position - new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight);
+        Ray2 = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
+        Ray3 = Physics.Raycast(this.transform.position + new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight);
+        if(Ray1 || Ray2 || Ray3){
+            isGrounded = true;
+        }
+        else{
+            isGrounded = false;
+        }
+        headHit = Physics.Raycast(this.transform.position, Vector3.up, groundDetectionHeight);
+        jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
+        slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), slopeDir, 0.8f);
+        againstWall = Physics.Raycast(this.transform.position, new Vector3(dir,0,0), wallDetectionDist);
+        clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), new Vector3(dir,0,0), wallDetectionDist);
+        if (pVelocity > 1)
+        {
+            player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            dir = 1; //Direction = Right
+            slopeDir = new Vector3(1, 0.25f, 0);
+        }
+        else if (pVelocity < -1)
+        {
+            player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            dir = -1; //Direction = Left
+            slopeDir = new Vector3(-1, -0.25f, 0);
+        }
+
+        if (!againstWall && slope)
+        {
+            movement.y = 2f;
+        }
+
+        if (headHit)
+        {
+            if (!falling)
             {
-                if (Input.GetKeyDown(jumpKey) && jumpBuffer)
-                {
-                    spacePressed = true;
-                    if (movement.x < maxVelocity && movement.x > -maxVelocity)
-                    { 
-                        movement.x = movement.x * 1.05f;
-                    }
+                movement.y = gravity * Time.deltaTime;
+            }
+        }
 
-                    pVelocity = movement.x;
-                    movement.y = jumpVel;
+        //Anti-Clipping---------------------------------------------------------\\
+        if (clip && !isGrounded && !againstWall)
+        {
+            this.transform.position = playerPos + new Vector3(0.3f * dir, 0.5f, 0);
+        }
+        //----------------------------------------------------------------------\\
+        if (!againstWall)
+        {
+            wallStickActive = false;
+        }
+        //Jumping Control-------------------------------------------------------\\
+        if (!wallStickActive)
+        {
+            if (Input.GetKeyDown(jumpKey) && jumpBuffer)
+            {
+                spacePressed = true;
+                if (movement.x < maxVelocity && movement.x > -maxVelocity)
+                { 
+                    movement.x = movement.x * 1.05f;
                 }
 
-                if (extraJumps == true)
-                {
-                    if (Input.GetKeyDown(jumpKey) && !jumpBuffer && !wallStickActive)
-                    {
-                        if (jumps > 0)
-                        {
-                            falling = false;
-                            pVelocity = movement.x;
-                            movement.y = jumpVel;
-                            jumps--;
-                        }
-                    }
-                }
+                pVelocity = movement.x;
+                movement.y = jumpVel;
+            }
 
-                if (shortHop)
+            if (extraJumps == true)
+            {
+                if (Input.GetKeyDown(jumpKey) && !jumpBuffer && !wallStickActive)
                 {
-                    if (Input.GetKeyUp(jumpKey))
+                    if (jumps > 0)
                     {
-                        if (!falling)
-                        {
-                            movement.y = gravity * Time.deltaTime;
-                        }
+                        falling = false;
+                        pVelocity = movement.x;
+                        movement.y = jumpVel;
+                        jumps--;
                     }
                 }
             }
-            //--------------------------------------------------------------------\\
 
-            //Air Control Code----------------------------------------------------\\
-            if (!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
+            if (shortHop)
             {
-                
+                if (Input.GetKeyUp(jumpKey))
+                {
+                    if (!falling)
+                    {
+                        movement.y = gravity * Time.deltaTime;
+                    }
+                }
+            }
+        }
+        //--------------------------------------------------------------------\\
+
+        //Air Reversal Code----------------------------------------------------\\
+        //if (!isGrounded)
+        //{   
+            
+            if((Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
+            {
                 if (movement.x > 0)
                 {
-                    return;
+                    //return;
                 }
 
                 if (movement.x < 0) 
                 { 
                     pVelocity = (movement.x * -1);
                 }
+        
             }
 
-            if (!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
+            if (!Input.GetKey(rightKey) && Input.GetKey(leftKey))
             {
                 if (movement.x < 0)
                 {
-                    return;
+                    //return;
                 }
 
                 if (movement.x > 0)
@@ -278,216 +290,210 @@ public class PlayerMovement : MonoBehaviour
                     pVelocity = (movement.x * -1);
                 }
             }
-                //----------------------------------------------------------------------\\
-
-            //Sliding Control-------------------------------------------------------\\
-            if (Input.GetKeyDown(slideKey) && isGrounded)
-            {
-                StartSlide();
-            }
-
-            if (Input.GetKeyUp(slideKey) && isSliding || !isGrounded)
-            {
-                StopSlide();
-            }
+        //}
             //----------------------------------------------------------------------\\
 
-            //Inventory Toggle-------------------------------------------------------\\
-            /*if (Input.GetKeyDown(inventoryKey))
-            {
-                uiInventory.ChangeInventoryAlpha();
-            }*/
-            //----------------------------------------------------------------------\\
-
-            //Animations-------------------------------------------------------\\
-            //animator.SetFloat("Speed", Math.Abs(pVelocity));
-            animator.SetBool("Sliding", isSliding);
-            if (!wallStickActive)
-            {
-                animator.SetBool("Jumping", !isGrounded);
-            }
-
-            if (isGrounded)
-            {
-                animator.SetFloat("Speed", Math.Abs(pVelocity));
-            }
-            
-            
+        //Sliding Control-------------------------------------------------------\\
+        if (Input.GetKeyDown(slideKey) && isGrounded)
+        {
+            StartSlide();
         }
+
+        if (Input.GetKeyUp(slideKey) && isSliding || !isGrounded)
+        {
+            StopSlide();
+        }
+        //----------------------------------------------------------------------\\
+
+        //Inventory Toggle-------------------------------------------------------\\
+        /*if (Input.GetKeyDown(inventoryKey))
+        {
+            uiInventory.ChangeInventoryAlpha();
+        }*/
+        //----------------------------------------------------------------------\\
+
+        //Animations-------------------------------------------------------\\
+        if(isGrounded)
+        {
+            animator.SetFloat("Speed", Math.Abs(pVelocity));
+            animator.SetBool("Sliding", isSliding);
+        }
+        animator.SetBool("Jumping", !isGrounded);
+
+        Debug.Log(isGrounded);
+    
     }
 
     void FixedUpdate()
     {
-        if (!disabled)
+        if (isGrounded)
         {
-            if (isGrounded)
-            {
-                wallStickActive = false;
-                wallSliding = false;
-            }
+            wallStickActive = false;
+            wallSliding = false;
+        }
 
-            if (Input.GetKeyUp(sprint))
-            {
-                sprintDebounce = false;
-            }
+        if (Input.GetKeyUp(sprint))
+        {
+            sprintDebounce = false;
+        }
 
-            //Equipped Items Buff
-            //BootsBuff();
-            //Walking and Running Control ------------------------------------------\\
-            if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
+        //Equipped Items Buff
+        //BootsBuff();
+        //Walking and Running Control ------------------------------------------\\
+        if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
+        {
+            if (Input.GetKey(sprint))
             {
-                if (Input.GetKey(sprint))
+                if (toggleSprint)
                 {
-                    if (toggleSprint)
+                    if (!sprintDebounce)
                     {
-                        if (!sprintDebounce)
+                        sprintDebounce = true;
+                        if (!sprinting)
                         {
-                            sprintDebounce = true;
-                            if (!sprinting)
-                            {
-                                sprinting = true;
-                            }
-                            else
-                            {
-                                sprinting = false;
-                            }
+                            sprinting = true;
                         }
-                    }
-                    else
-                    {
-                        sprinting = true;
+                        else
+                        {
+                            sprinting = false;
+                        }
                     }
                 }
                 else
                 {
-                    if (!toggleSprint)
-                    {
-                        sprinting = false;
-                    }
+                    sprinting = true;
                 }
-
-                if (sprinting)
+            }
+            else
+            {
+                if (!toggleSprint)
                 {
-                    if (pVelocity < runSpeed)
-                    {
-                        pVelocity += speedIncRun;
-                    }
-                }
-                else if (!sprinting)
-                {
-                    if (pVelocity < walkSpeed)
-                    {
-                        pVelocity += speedIncWalk;
-                    }
-
-                    if (pVelocity > walkSpeed)
-                    {
-                        pVelocity -= speedIncWalk;
-                    }
+                    sprinting = false;
                 }
             }
 
-            if ((Input.GetKey(leftKey) && !Input.GetKey(rightKey)) && isGrounded)
+            if (sprinting)
             {
-                if (Input.GetKey(sprint))
+                if (pVelocity < runSpeed)
                 {
-                    if (toggleSprint)
+                    pVelocity += speedIncRun;
+                }
+            }
+            else if (!sprinting)
+            {
+                if (pVelocity < walkSpeed)
+                {
+                    pVelocity += speedIncWalk;
+                }
+
+                if (pVelocity > walkSpeed)
+                {
+                    pVelocity -= speedIncWalk;
+                }
+            }
+        }
+
+        if ((Input.GetKey(leftKey) && !Input.GetKey(rightKey)))
+        {
+            if (Input.GetKey(sprint))
+            {
+                if (toggleSprint)
+                {
+                    if (!sprintDebounce)
                     {
-                        if (!sprintDebounce)
+                        if (!sprinting)
                         {
-                            if (!sprinting)
-                            {
-                                sprinting = true;
-                            }
-                            else
-                            {
-                                sprinting = false;
-                            }
-                            sprintDebounce = true;
+                            sprinting = true;
                         }
-                    }
-                    else
-                    {
-                        sprinting = true;
+                        else
+                        {
+                            sprinting = false;
+                        }
+                        sprintDebounce = true;
                     }
                 }
                 else
                 {
-                    if (!toggleSprint)
-                    {
-                        sprinting = false;
-                    }
+                    sprinting = true;
                 }
-
-                if (sprinting)
+            }
+            else
+            {
+                if (!toggleSprint)
                 {
-                    if (pVelocity > -runSpeed)
-                    {
-                        pVelocity -= speedIncRun;
-                    }
-                }
-                else if (!sprinting)
-                {
-                    if (pVelocity > -walkSpeed)
-                    {
-                        pVelocity -= speedIncWalk;
-                    }
-
-                    if (pVelocity > walkSpeed)
-                    {
-                        pVelocity += speedIncWalk;
-                    }
+                    sprinting = false;
                 }
             }
 
-            if ((!Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
+            if (sprinting)
             {
-                if (pVelocity > 0.00f)
+                if (pVelocity > -runSpeed)
+                {
+                    pVelocity -= speedIncRun;
+                }
+            }
+            else if (!sprinting)
+            {
+                if (pVelocity > -walkSpeed)
                 {
                     pVelocity -= speedIncWalk;
                 }
 
-                if (pVelocity < 0.00f)
+                if (pVelocity > walkSpeed)
                 {
                     pVelocity += speedIncWalk;
                 }
-                //Debug.Log("Slowing Down...");
-            }
-            //----------------------------------------------------------------------\\
-
-            //Player sliding update
-            if (isSliding)
-            {
-                Slide();
-            }
-            
-            //Player movement update (!|**Keep At Bottom Of Fixed Update**|!)
-            if (!wallStickActive)
-            {
-                movement.x = pVelocity;
-            
-                if (jumpBuffer)
-                {
-                    jumps = numOfJumps;
-                }
-                if (!isGrounded && !wallStickActive)
-                {
-                    if (movement.y < 0)
-                    {
-                        falling = true;
-                    }
-
-                    movement.y += gravity * Time.deltaTime;
-                    spacePressed = false;
-                }
-                else if (isGrounded && !spacePressed && !slope)
-                {
-                    falling = false;
-                    movement.y = 0;
-                }
-                playerRB.velocity = movement;
             }
         }
+
+        if ((!Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
+        {
+            if (pVelocity > 0.00f)
+            {
+                pVelocity -= speedIncWalk;
+            }
+
+            if (pVelocity < 0.00f)
+            {
+                pVelocity += speedIncWalk;
+            }
+            //Debug.Log("Slowing Down...");
+        }
+        //----------------------------------------------------------------------\\
+
+        //Player sliding update
+        if (isSliding)
+        {
+            Slide();
+        }
+        
+        //Player movement update (!|**Keep At Bottom Of Fixed Update**|!)
+        if (!wallStickActive)
+        {
+            movement.x = pVelocity;
+        
+            if (jumpBuffer)
+            {
+                jumps = numOfJumps;
+            }
+            if (!isGrounded && !wallStickActive)
+            {
+                if (movement.y < 0)
+                {
+                    falling = true;
+                }
+
+                movement.y += gravity * Time.deltaTime;
+                spacePressed = false;
+            }
+            else if (isGrounded && !spacePressed && !slope)
+            {
+                falling = false;
+                movement.y = 0;
+            }
+            playerRB.velocity = movement;
+        }
+        //Debug.Log("Current velocity: " + pVelocity)
     }
 
     private void StartSlide()

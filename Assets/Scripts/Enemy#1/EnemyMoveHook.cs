@@ -69,8 +69,8 @@ public class EnemyMoveHook : MonoBehaviour
             Debug.DrawLine(transform.position, playerTransform.position, gizmoColor);
             return;
         }
-        edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 1f);
-        wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 0.8f);
+        edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.65f, 0), 2f);
+        wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 1f);
         isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
         if (!isGrounded)
         {

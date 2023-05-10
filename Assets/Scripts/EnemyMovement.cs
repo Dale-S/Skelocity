@@ -10,14 +10,17 @@ public class EnemyMovement : MonoBehaviour
     public float speed = 1.0f;
     public bool edge;
     public bool wall;
-    private float walkDir = 1.0f;
+    private float walkDir = 1f;
     private Rigidbody enemyRB;
     private GameObject enemy;
     private Vector3 enemyPos;
     public bool isGrounded;
+    public bool completelyGrounded;
     public float enemyHP = 20;
-    private MarksmenScanner MS;
-    
+    private bool ray1;
+    private bool ray2;
+    private bool ray3;
+
     //Enemy Death Effect
     public GameObject deathSoundPrefab;
 
@@ -32,15 +35,20 @@ public class EnemyMovement : MonoBehaviour
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
-        MS = enemy.GetComponent<MarksmenScanner>();
         animator = enemyModel.GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
+        edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 2f);
+        wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 1f);
+        ray1 = Physics.Raycast(enemyPos - new Vector3(0.4f, 0, 0), Vector3.down, 1.2f);
+        ray2 = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
+        ray3 = Physics.Raycast(enemyPos + new Vector3(0.4f, 0, 0), Vector3.down, 1.2f);
         enemyPos = enemy.transform.position;
-        if ((wall || !edge) && isGrounded && !MS.isShooting)
+        if ((wall || !edge || !completelyGrounded) && isGrounded)
         {
+            walkDir = -walkDir;
             if (walkDir > 0)
             {
                 this.gameObject.transform.localRotation = Quaternion.Euler(0,0,0);
@@ -49,15 +57,16 @@ public class EnemyMovement : MonoBehaviour
             {
                 this.gameObject.transform.localRotation = Quaternion.Euler(0,180,0);
             }
-            walkDir = -walkDir;
         }
     }
-    
-    void dealtDamage(float damageDealt)
+    void OnTriggerEnter(Collider other)
     {
-        enemyHP -= damageDealt;
-        Debug.Log(enemyHP);
-        Debug.Log("Ouch from marksman");
+        if (other.CompareTag("Bonk") )
+        {
+            Debug.Log(enemyHP);
+            enemyHP -= 10;
+            Debug.Log("Ouch from shooter");
+        }
     }
     
     
@@ -70,23 +79,28 @@ public class EnemyMovement : MonoBehaviour
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
-        edge = Physics.Raycast(enemyPos - new Vector3(0, 0.5f, 0), new Vector3(1 * walkDir, -0.75f, 0), 1f);
-        wall = Physics.Raycast(enemyPos - new Vector3(0, 0.8f, 0), new Vector3(1 * walkDir, 0, 0), 0.8f);
-        isGrounded = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
+
+        if(ray1||ray2||ray3){
+            isGrounded = true;
+        }
+        else{
+            isGrounded = false;
+        }
+
+        if(ray1&&ray2&&ray3){
+            completelyGrounded = true;
+        }
+        else{
+           completelyGrounded = false;
+        }
+
         if (!isGrounded)
         {
             enemyRB.velocity = new Vector3(0, -10f, 0);
         }
         else
         {
-            if (!MS.isShooting)
-            {
-                enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
-            }
-            else
-            {
-                enemyRB.velocity = new Vector3(0, 0, 0);
-            }
+            enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
         }
         
         animator.SetFloat("Speed", Math.Abs(speed));
