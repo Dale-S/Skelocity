@@ -15,6 +15,7 @@ public class EnemyMovement2 : MonoBehaviour
     private GameObject enemy;
     private Vector3 enemyPos;
     public bool isGrounded;
+    private GameObject levelManager;
     
     private GameObject player;
     public GameObject explosionPrefab;
@@ -27,8 +28,7 @@ public class EnemyMovement2 : MonoBehaviour
     private bool playerDetected = false;
     private bool enemyStop = false;
     private float distanceToPlayer;
-
-    private PlayerHealth PH;
+    
     public float enemyHP = 40;
 
     //Enemy Death Sound Effect
@@ -47,7 +47,7 @@ public class EnemyMovement2 : MonoBehaviour
         enemyPos = enemy.transform.position;
         player = GameObject.FindGameObjectWithTag("Player");
         animator = enemyModel.GetComponent<Animator>();
-        PH = player.GetComponent<PlayerHealth>();
+        levelManager = GameObject.Find("LevelManager");
     }
 
     private void FixedUpdate()
@@ -78,6 +78,7 @@ public class EnemyMovement2 : MonoBehaviour
         {
             GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Bomb Dead");
+            levelManager.GetComponent<EnemyCount>().count -= 1;
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
@@ -132,6 +133,7 @@ public class EnemyMovement2 : MonoBehaviour
             player.SendMessage("damagePlayer");
         }
         GameObject effectIns = (GameObject) Instantiate(explosionPrefab, transform.position, transform.rotation);
+        levelManager.GetComponent<EnemyCount>().count -= 1;
         Destroy(effectIns, 2f);
         Destroy(gameObject);
     }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 502292200498616309}
   - component: {fileID: 502292200498616308}
   - component: {fileID: 502292200498616305}
+  - component: {fileID: 3008221245498536808}
   m_Layer: 0
   m_Name: BombEnemy
   m_TagString: Enemy
@@ -140,6 +141,18 @@ MonoBehaviour:
   enemyHP: 40
   deathSoundPrefab: {fileID: 5873556173675448593, guid: 838220ca89f865e4ab8845d5f2566990, type: 3}
   enemyModel: {fileID: 919132147814684534}
+--- !u!114 &3008221245498536808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502292200498616310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8d6f6e65e0aba4291c7e28fa578fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &942504133
 PrefabInstance:
   m_ObjectHideFlags: 0

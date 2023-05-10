@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     public PlayerMovement PM;
     private int health;
     private bool invincible = false;
-    private float invTime = 2f;
+    private float invTime = 3f;
     private float timer;
     public GameObject playerModel;
 
@@ -55,10 +55,6 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Player damaged");
             health--;
             timer = invTime;
-        }
-        if (invincible)
-        {
-            //Debug.Log("Sike you thought");
         }
     }
 }
