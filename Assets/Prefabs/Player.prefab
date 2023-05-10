@@ -39392,6 +39392,7 @@ GameObject:
   - component: {fileID: 8897681063432605959}
   - component: {fileID: 4689637994825559619}
   - component: {fileID: 4401205419707207668}
+  - component: {fileID: 9128511067811424574}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -39507,20 +39508,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82a02653b51db24f9ecb782224bed98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelocity: 15
-  hearts: 2
-  attackRange: 3
-  damage: 5
-  sprintSpeed: 7
-  walkSpeed: 4
+  defExtraJumps: 1
+  defInvTime: 3
   defMaxVelocity: 15
   defDamage: 5
   defWalk: 4
   defSprint: 7
   defAttackRange: 3
   defHearts: 2
+  maxVelocity: 15
+  hearts: 2
+  attackRange: 3
+  damage: 5
+  sprintSpeed: 7
+  walkSpeed: 4
   extraJumps: 1
-  defExtraJumps: 1
+  invinTime: 3
 --- !u!114 &8897681063432605959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39549,6 +39552,9 @@ MonoBehaviour:
   wallSliding: 0
   headHit: 0
   toggleSprint: 0
+  Ray1: 0
+  Ray2: 0
+  Ray3: 0
   wallCheck: {fileID: 0}
   wallLayer:
     serializedVersion: 2
@@ -39668,6 +39674,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9128511067811424574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897681063432605964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c7f2aa100338540be6b96a8da9c291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PS: {fileID: 8897681063432605956}
+  PM: {fileID: 8897681063432605959}
+  playerModel: {fileID: 8897681063499013317}
 --- !u!1 &8897681063445876108
 GameObject:
   m_ObjectHideFlags: 0

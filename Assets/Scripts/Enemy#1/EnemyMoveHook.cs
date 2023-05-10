@@ -17,6 +17,7 @@ public class EnemyMoveHook : MonoBehaviour
     private Vector3 enemyPos;
     public bool isGrounded;
     private Transform playerTransform;
+    private GameObject levelManager;
 
     public float enemyHP = 30;
     
@@ -36,6 +37,7 @@ public class EnemyMoveHook : MonoBehaviour
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
         animator = enemyModel.GetComponent<Animator>();
+        levelManager = GameObject.Find("LevelManager");
     }
 
     private void FixedUpdate()
@@ -64,6 +66,7 @@ public class EnemyMoveHook : MonoBehaviour
         {
             GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Hook Dead");
+            levelManager.GetComponent<EnemyCount>().count -= 1;
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }

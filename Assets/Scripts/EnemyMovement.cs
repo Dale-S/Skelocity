@@ -22,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
     private bool ray3;
     private MarksmenScanner MS;
     private float defSpeed;
+    private GameObject levelManager;
 
     //Enemy Death Effect
     public GameObject deathSoundPrefab;
@@ -40,6 +41,7 @@ public class EnemyMovement : MonoBehaviour
         MS = enemy.GetComponent<MarksmenScanner>();
         animator = enemyModel.GetComponent<Animator>();
         defSpeed = speed;
+        levelManager = GameObject.Find("LevelManager");
     }
 
     private void FixedUpdate()
@@ -71,6 +73,7 @@ public class EnemyMovement : MonoBehaviour
         {
             GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Shooter Dead");
+            levelManager.GetComponent<EnemyCount>().count -= 1;
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
