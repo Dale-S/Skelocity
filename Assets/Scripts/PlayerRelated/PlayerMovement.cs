@@ -81,6 +81,9 @@ public class PlayerMovement : MonoBehaviour
     public bool wallSliding = false;
     public bool headHit = false;
     public bool toggleSprint = false;
+    public bool Ray1 = false;
+    public bool Ray2 = false;
+    public bool Ray3 = false;
 
     //Wall detection variables
     private float wallDetectionDist = 0.8f;
@@ -165,7 +168,15 @@ public class PlayerMovement : MonoBehaviour
         
         playerPos = this.transform.position;
         //Check to see if player is on the ground
-        isGrounded = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
+        Ray1 = Physics.Raycast(this.transform.position - new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight);
+        Ray2 = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
+        Ray3 = Physics.Raycast(this.transform.position + new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight);
+        if(Ray1 || Ray2 || Ray3){
+            isGrounded = true;
+        }
+        else{
+            isGrounded = false;
+        }
         headHit = Physics.Raycast(this.transform.position, Vector3.up, groundDetectionHeight);
         jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), slopeDir, 0.8f);
@@ -249,33 +260,37 @@ public class PlayerMovement : MonoBehaviour
         }
         //--------------------------------------------------------------------\\
 
-        //Air Control Code----------------------------------------------------\\
-        if (!isGrounded && (Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
-        {
+        //Air Reversal Code----------------------------------------------------\\
+        //if (!isGrounded)
+        //{   
             
-            if (movement.x > 0)
+            if((Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
             {
-                return;
+                if (movement.x > 0)
+                {
+                    //return;
+                }
+
+                if (movement.x < 0) 
+                { 
+                    pVelocity = (movement.x * -1);
+                }
+        
             }
 
-            if (movement.x < 0) 
-            { 
-                pVelocity = (movement.x * -1);
-            }
-        }
-
-        if (!isGrounded && (!Input.GetKey(rightKey) && Input.GetKey(leftKey)))
-        {
-            if (movement.x < 0)
+            if (!Input.GetKey(rightKey) && Input.GetKey(leftKey))
             {
-                return;
-            }
+                if (movement.x < 0)
+                {
+                    //return;
+                }
 
-            if (movement.x > 0)
-            {
-                pVelocity = (movement.x * -1);
+                if (movement.x > 0)
+                {
+                    pVelocity = (movement.x * -1);
+                }
             }
-        }
+        //}
             //----------------------------------------------------------------------\\
 
         //Sliding Control-------------------------------------------------------\\
@@ -299,9 +314,13 @@ public class PlayerMovement : MonoBehaviour
 
         //Animations-------------------------------------------------------\\
         if(isGrounded)
+        {
             animator.SetFloat("Speed", Math.Abs(pVelocity));
-        animator.SetBool("Sliding", isSliding);
+            animator.SetBool("Sliding", isSliding);
+        }
         animator.SetBool("Jumping", !isGrounded);
+
+        Debug.Log(isGrounded);
     
     }
 
@@ -321,7 +340,7 @@ public class PlayerMovement : MonoBehaviour
         //Equipped Items Buff
         //BootsBuff();
         //Walking and Running Control ------------------------------------------\\
-        if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
+        if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
         {
             if (Input.GetKey(sprint))
             {
@@ -374,7 +393,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if ((Input.GetKey(leftKey) && !Input.GetKey(rightKey)) && isGrounded)
+        if ((Input.GetKey(leftKey) && !Input.GetKey(rightKey)))
         {
             if (Input.GetKey(sprint))
             {
