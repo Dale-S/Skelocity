@@ -42796,6 +42796,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6557836278554873861, guid: 8196969792eaa4346b72da60f86f33ec, type: 3}
   burstInterval: 0.7
   bulletSpeed: 8
+  isShooting: 0
   enemyModel: {fileID: 4592591556165827357}
 --- !u!114 &3837989379865526533
 MonoBehaviour:
@@ -42813,6 +42814,7 @@ MonoBehaviour:
   edge: 0
   wall: 0
   isGrounded: 0
+  completelyGrounded: 0
   enemyHP: 20
   deathSoundPrefab: {fileID: 5873556173675448593, guid: 838220ca89f865e4ab8845d5f2566990, type: 3}
   enemyModel: {fileID: 4592591556165827357}
@@ -43560,7 +43562,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4592591556165827357}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.02, y: -0.899, z: -0.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -43570,7 +43572,7 @@ Transform:
   - {fileID: 5929467651628133671}
   m_Father: {fileID: 3837989379865526531}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!95 &7068353195427593181
 Animator:
   serializedVersion: 5
