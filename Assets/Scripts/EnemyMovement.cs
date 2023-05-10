@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
     public float speed = 1.0f;
     public bool edge;
     public bool wall;
-    private float walkDir = 1f;
+    public float walkDir = 1f;
     private Rigidbody enemyRB;
     private GameObject enemy;
     private Vector3 enemyPos;
@@ -20,6 +20,8 @@ public class EnemyMovement : MonoBehaviour
     private bool ray1;
     private bool ray2;
     private bool ray3;
+    private MarksmenScanner MS;
+    private float defSpeed;
 
     //Enemy Death Effect
     public GameObject deathSoundPrefab;
@@ -35,7 +37,9 @@ public class EnemyMovement : MonoBehaviour
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
+        MS = enemy.GetComponent<MarksmenScanner>();
         animator = enemyModel.GetComponent<Animator>();
+        defSpeed = speed;
     }
 
     private void FixedUpdate()
@@ -46,7 +50,7 @@ public class EnemyMovement : MonoBehaviour
         ray2 = Physics.Raycast(enemyPos, Vector3.down, 1.2f);
         ray3 = Physics.Raycast(enemyPos + new Vector3(0.4f, 0, 0), Vector3.down, 1.2f);
         enemyPos = enemy.transform.position;
-        if ((wall || !edge || !completelyGrounded) && isGrounded)
+        if ((wall || !edge) && isGrounded && !MS.isShooting)
         {
             walkDir = -walkDir;
             if (walkDir > 0)
@@ -59,17 +63,8 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Bonk") )
-        {
-            Debug.Log(enemyHP);
-            enemyHP -= 10;
-            Debug.Log("Ouch from shooter");
-        }
-    }
-    
-    
+
+
     private void Update()
     {
         if (enemyHP <= 0)
@@ -87,7 +82,7 @@ public class EnemyMovement : MonoBehaviour
             isGrounded = false;
         }
 
-        if(ray1&&ray2&&ray3){
+        if(ray1 && ray2 && ray3){
             completelyGrounded = true;
         }
         else{
@@ -97,12 +92,27 @@ public class EnemyMovement : MonoBehaviour
         if (!isGrounded)
         {
             enemyRB.velocity = new Vector3(0, -10f, 0);
+            speed = 0;
         }
         else
         {
-            enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
+            if (!MS.isShooting)
+            {
+                enemyRB.velocity = new Vector3(speed * walkDir, 0, 0);
+                speed = defSpeed;
+            }
+            else
+            {
+                enemyRB.velocity = new Vector3(0, 0, 0);
+                speed = 0;
+            }
         }
         
         animator.SetFloat("Speed", Math.Abs(speed));
+    }
+
+    public Vector3 getDir()
+    {
+        return new Vector3(walkDir, 0f, 0f);
     }
 }

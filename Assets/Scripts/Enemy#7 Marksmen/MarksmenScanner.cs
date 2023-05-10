@@ -32,7 +32,6 @@ public class MarksmenScanner : MonoBehaviour
     void Update()
     {
         ScanForPlayer();
-
         if (playerSeen && !isShooting)
         {
             StartCoroutine(ShootBurst());
@@ -42,8 +41,8 @@ public class MarksmenScanner : MonoBehaviour
     void ScanForPlayer()
     {
         RaycastHit hit;
-        Vector3 xAxisDirection = -transform.right; // This sets the direction to the local x-axis
-        bool playerInRange = Physics.Raycast(transform.position, xAxisDirection, out hit, detectionRange, playerLayer);
+        Vector3 xAxisDirection = transform.right; // This sets the direction to the local x-axis
+        bool playerInRange = Physics.Raycast(transform.position, xAxisDirection, out hit, detectionRange);
 
         if (playerInRange && hit.collider.CompareTag("Player"))
         {
@@ -96,7 +95,7 @@ public class MarksmenScanner : MonoBehaviour
         shootSound.Play();
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        bulletRb.velocity = -transform.right * bulletSpeed;
+        bulletRb.velocity = transform.right * bulletSpeed;
 
         // Set bullet as trigger and add a script to handle the collision
         bullet.GetComponent<Collider>().isTrigger = true;
@@ -107,6 +106,6 @@ public class MarksmenScanner : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = playerSeen ? Color.red : Color.yellow;
-        Gizmos.DrawRay(transform.position, -transform.right * detectionRange);
+        Gizmos.DrawRay(transform.position, transform.right * detectionRange);
     }
 }

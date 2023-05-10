@@ -243,7 +243,6 @@ public class PlayerMovement : MonoBehaviour
                         pVelocity = movement.x;
                         movement.y = jumpVel;
                         jumps--;
-                        animator.SetTrigger("DoubleJumping");
                     }
                 }
             }
@@ -317,10 +316,9 @@ public class PlayerMovement : MonoBehaviour
         if(isGrounded)
         {
             animator.SetFloat("Speed", Math.Abs(pVelocity));
+            animator.SetBool("Sliding", isSliding);
         }
-        animator.SetBool("Sliding", isSliding);
         animator.SetBool("Jumping", !isGrounded);
-    
     }
 
     void FixedUpdate()
