@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: 0
+  portal: {fileID: 9195296622709765301, guid: 94756eae35caf4d43bf7ccdcd59e749a, type: 3}
+  enemiesLeft: {fileID: 0}

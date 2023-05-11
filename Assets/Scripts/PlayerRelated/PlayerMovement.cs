@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.EventSystems;
 using UnityEngine;
 
 
@@ -50,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     private KeyCode leftKey = KeyCode.A;
     private KeyCode rightKey = KeyCode.D;
     private KeyCode sprint = KeyCode.LeftShift;
-    private KeyCode inventoryKey = KeyCode.I;
+    //private KeyCode inventoryKey = KeyCode.I;
 
 
     //Slide variables
@@ -108,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         playerObject = GetComponent<Transform>();
         player = this.gameObject;
         playerPos = player.transform.position;
-        maxVelocity = PS.defMaxVelocity;
+        maxVelocity = PS.maxVelocity;
         movement = new Vector3(0, 0, 0);
         gravity = -(2 * apex) / Mathf.Pow(timeToApex, 2);
         jumpVel = Mathf.Abs(gravity) * timeToApex;

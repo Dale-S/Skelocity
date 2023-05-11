@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 840780351982022790}
   - component: {fileID: 840780351982022811}
   - component: {fileID: 840780351982022808}
+  - component: {fileID: 8223225412648587710}
   m_Layer: 5
   m_Name: S.T.Background
   m_TagString: Untagged
@@ -78,6 +79,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8223225412648587710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840780351982022791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84981050877c0448a10b5173d17300a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MS1: 0
+  MS2: 0
+  MS3: 0
+  MS4: 0
+  MS5: 0
+  CS1: 0
+  CS2: 0
+  CS3: 0
+  CS4: 0
+  CS5: 0
 --- !u!1 &840780352119532251
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +223,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780352119532255}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyCombatSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780352119532253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +506,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780352335577691}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyMovementSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780352335577693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -742,7 +789,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780352465225548}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyCombatSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780352465225550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1013,7 +1072,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780352595316860}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyMovementSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780352595316862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,7 +1220,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780352598870891}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyMovementSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780352598870893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1285,7 +1368,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780352608040186}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyCombatSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780352608040188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,6 +1543,7 @@ GameObject:
   - component: {fileID: 840780352624783490}
   - component: {fileID: 840780352624783513}
   - component: {fileID: 840780352624783512}
+  - component: {fileID: 6669119866177505461}
   m_Layer: 5
   m_Name: SkillMenu
   m_TagString: Untagged
@@ -1563,6 +1659,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillTreePanel: {fileID: 840780351982022791}
+--- !u!114 &6669119866177505461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840780352624783491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84981050877c0448a10b5173d17300a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MS1: 0
+  MS2: 0
+  MS3: 0
+  MS4: 0
+  MS5: 0
+  CS1: 0
+  CS2: 0
+  CS3: 0
+  CS4: 0
+  CS5: 0
 --- !u!1 &840780352717022704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1764,7 +1882,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: xtra Jumps 0/3
+  m_text: xtra Jumps 0/5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5476369960ba1c04da7a9d60b82c1ec8, type: 2}
   m_sharedMaterial: {fileID: 1707847967924434839, guid: 5476369960ba1c04da7a9d60b82c1ec8, type: 2}
@@ -2091,7 +2209,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780352959442641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyCombatSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780352959442655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2536,7 +2666,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780353362228653}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyMovementSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780353362228655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2807,7 +2949,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780353862365933}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyMovementSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780353862365935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3078,7 +3232,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840780353864499554}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6669119866177505461}
+        m_TargetAssemblyTypeName: SkillScript, Assembly-CSharp
+        m_MethodName: BuyCombatSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840780353864499556
 MonoBehaviour:
   m_ObjectHideFlags: 0

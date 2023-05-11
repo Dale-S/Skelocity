@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    private GameObject player;
     public PlayerStats PS;
     public PlayerMovement PM;
     public float damageDealt = 0f;
@@ -25,6 +27,8 @@ public class PlayerAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = this.gameObject;
+        PS = player.GetComponent<PlayerStats>();
         animator = playerModel.GetComponent<Animator>();
         attackSound = GetComponent<AudioSource>();
     }

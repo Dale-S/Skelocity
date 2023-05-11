@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class EnemyMoveHook : MonoBehaviour
@@ -18,6 +17,8 @@ public class EnemyMoveHook : MonoBehaviour
     public bool isGrounded;
     private Transform playerTransform;
     private GameObject levelManager;
+    private GameObject player;
+    private LevelScript LS;
 
     public float enemyHP = 30;
     
@@ -32,7 +33,9 @@ public class EnemyMoveHook : MonoBehaviour
 
     private void Start()
     {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerTransform = player.transform;
+        LS = player.GetComponent<LevelScript>();
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
@@ -67,6 +70,7 @@ public class EnemyMoveHook : MonoBehaviour
             GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Hook Dead");
             levelManager.GetComponent<EnemyCount>().count -= 1;
+            LS.addXP();
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }

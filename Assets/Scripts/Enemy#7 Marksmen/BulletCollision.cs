@@ -1,5 +1,4 @@
 using System;
-using TreeEditor;
 using UnityEngine;
 
 public class BulletCollision : MonoBehaviour
@@ -11,9 +10,7 @@ public class BulletCollision : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player = GameObject.FindGameObjectWithTag("Player");
-            PH = player.GetComponent<PlayerHealth>();
-            PH.damagePlayer();
+            other.transform.SendMessage("damagePlayer");
             Debug.Log("I shot you");
         }
         if (!other.CompareTag("Enemy"))

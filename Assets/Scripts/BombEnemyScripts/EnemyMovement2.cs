@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class EnemyMovement2 : MonoBehaviour
@@ -18,6 +17,7 @@ public class EnemyMovement2 : MonoBehaviour
     private GameObject levelManager;
     
     private GameObject player;
+    private LevelScript LS;
     public GameObject explosionPrefab;
 
     public float distanceThreshold = 5f;
@@ -45,10 +45,11 @@ public class EnemyMovement2 : MonoBehaviour
         enemy = gameObject;
         enemyRB = gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.Find("Player");
         animator = enemyModel.GetComponent<Animator>();
         levelManager = GameObject.Find("LevelManager");
         distanceToPlayer = 10f;
+        LS = player.GetComponent<LevelScript>();
     }
 
     private void FixedUpdate()
@@ -80,6 +81,7 @@ public class EnemyMovement2 : MonoBehaviour
             GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Bomb Dead");
             levelManager.GetComponent<EnemyCount>().count -= 1;
+            player.SendMessage("addXP");
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }
