@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,5 +22,13 @@ public class LavaFlow : MonoBehaviour
 
         Vector2 displacement = direction * (rate * Time.deltaTime);
         mat.mainTextureOffset += displacement;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            other.SendMessage("damagePlayer");
+        }
     }
 }
