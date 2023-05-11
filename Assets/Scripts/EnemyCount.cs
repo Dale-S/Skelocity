@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,7 +16,8 @@ public class EnemyCount : MonoBehaviour
     private bool spawned = false;
     private float placementX;
     private float placementY;
-    
+    public TextMeshProUGUI enemiesLeft;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,11 +52,6 @@ public class EnemyCount : MonoBehaviour
                 spawned = true;
             }
         }
-        
-        i++;
-        if (i % 1000 == 0)
-        {
-            Debug.Log("Enemies Left: " + count);
-        }
+        enemiesLeft.text = "x " + count;
     }
 }

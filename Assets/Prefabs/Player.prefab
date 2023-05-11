@@ -39688,6 +39688,7 @@ GameObject:
   - component: {fileID: 4689637994825559619}
   - component: {fileID: 4401205419707207668}
   - component: {fileID: 9128511067811424574}
+  - component: {fileID: 2825946399095562405}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -39803,17 +39804,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82a02653b51db24f9ecb782224bed98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defExtraJumps: 1
-  defInvTime: 3
-  defMaxVelocity: 15
-  defDamage: 5
-  defWalk: 4
-  defSprint: 7
-  defAttackRange: 3
-  defHearts: 2
+  attackCooldown: 2
   maxVelocity: 15
-  hearts: 2
-  attackRange: 3
+  hearts: 5
+  attackRange: 5
   damage: 5
   sprintSpeed: 7
   walkSpeed: 4
@@ -39985,11 +39979,34 @@ MonoBehaviour:
   PS: {fileID: 8897681063432605956}
   PM: {fileID: 8897681063432605959}
   playerModel: {fileID: 8897681063499013317}
+  healthLeft: {fileID: 0}
   hoodModel: {fileID: 6963577243013859959}
   armorModel: {fileID: 2518190422643181872}
   skirtModel: {fileID: 534387932}
   beltModel: {fileID: 1769332161455415639}
   damagedMaterial: {fileID: 2100000, guid: f9adb923b6caf444288202d8a72b065c, type: 2}
+--- !u!114 &2825946399095562405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897681063432605964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c1af5fd2f9bb34ab907af742e24e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementLVL: 0
+  combatLVL: 0
+  xpToNext1: 0
+  xpToNext2: 0
+  currXP1: 0
+  currXP2: 0
+  skillPoints1: 0
+  skillPoints2: 0
+  mask1: {fileID: 0}
+  mask2: {fileID: 0}
 --- !u!1 &8897681063445876108
 GameObject:
   m_ObjectHideFlags: 0

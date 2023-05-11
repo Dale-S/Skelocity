@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class PlayerHealth : MonoBehaviour
@@ -14,6 +16,8 @@ public class PlayerHealth : MonoBehaviour
     private float invTime = 3f;
     private float timer;
     public GameObject playerModel;
+    public TextMeshProUGUI healthLeft;
+
     //public Renderer playerModels;
     public Renderer hoodModel;
     public Renderer armorModel;
@@ -63,6 +67,8 @@ public class PlayerHealth : MonoBehaviour
             playerModel.SetActive(false);
             SceneManager.LoadScene("Hub");
         }
+
+        healthLeft.text = "x " + health;
     }
     
     public void damagePlayer()

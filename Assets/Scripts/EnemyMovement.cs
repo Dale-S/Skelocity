@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
@@ -23,6 +22,8 @@ public class EnemyMovement : MonoBehaviour
     private MarksmenScanner MS;
     private float defSpeed;
     private GameObject levelManager;
+    private GameObject player;
+    private LevelScript LS;
 
     //Enemy Death Effect
     public GameObject deathSoundPrefab;
@@ -35,6 +36,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         enemy = this.gameObject;
         enemyRB = this.gameObject.GetComponent<Rigidbody>();
         enemyPos = enemy.transform.position;
@@ -74,6 +76,7 @@ public class EnemyMovement : MonoBehaviour
             GameObject deathSound = (GameObject) Instantiate(deathSoundPrefab, transform.position, transform.rotation);
             Debug.Log("Shooter Dead");
             levelManager.GetComponent<EnemyCount>().count -= 1;
+            player.SendMessage("addXP");
             Destroy(deathSound, 2f);
             Destroy(this.gameObject);
         }

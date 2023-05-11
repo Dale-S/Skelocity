@@ -14,6 +14,7 @@ public class LevelScript : MonoBehaviour
     public int skillPoints1; //Movement
     public int skillPoints2; //Combat
     private PlayerMovement PM;
+    private SkillScript SS;
     private GameObject player;
     private float currSpeed;
     private float defTick = 5f;
@@ -30,7 +31,7 @@ public class LevelScript : MonoBehaviour
         player = this.gameObject;
         PM = player.GetComponent<PlayerMovement>();
         PS = player.GetComponent<PlayerStats>();
-        
+        SS = player.GetComponent<SkillScript>();
         //Data to be saved
         movementLVL = 1;
         combatLVL = 1;
@@ -41,6 +42,8 @@ public class LevelScript : MonoBehaviour
         skillPoints1 = 0;
         skillPoints2 = 0;
         ////////////////////////////
+        
+        //LoadLevels();
     }
 
     // Update is called once per frame
@@ -112,4 +115,21 @@ public class LevelScript : MonoBehaviour
         float fillAmount = (float)currXP2 / (float)xpToNext2;
         mask2.fillAmount = fillAmount;
     }
+    
+    public void LoadLevels()
+    {
+        /*
+        PlayerData data = SaveSystem.LoadPlayer(this, SS);
+        if (data != null)
+        {
+            currXP1 = data.currXP1;
+            currXP2 = data.currXP2;
+            movementLVL = data.movementLVL;
+            combatLVL = data.combatLVL;
+            skillPoints1 = data.skillPoints1;
+            skillPoints2 = data.skillPoints2;
+        }
+        */
+    }
 }
+
