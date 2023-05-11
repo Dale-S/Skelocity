@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class PauseMenu : MonoBehaviour, IPointerClickHandler
 {
     public GameObject pauseMenuUI;
+    public GameObject controlsMenuUI;
     public AudioMixer mainMixer;
     public Button hubButton;
     public Button soundsButton;
@@ -23,6 +24,7 @@ public class PauseMenu : MonoBehaviour, IPointerClickHandler
         exitButton.onClick.AddListener(ExitGame);
         audioSettingsPanel.SetActive(false);
         pauseMenuUI.SetActive(false);
+        controlsMenuUI.SetActive(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
