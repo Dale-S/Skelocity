@@ -39984,6 +39984,11 @@ MonoBehaviour:
   PS: {fileID: 8897681063432605956}
   PM: {fileID: 8897681063432605959}
   playerModel: {fileID: 8897681063499013317}
+  hoodModel: {fileID: 6963577243013859959}
+  armorModel: {fileID: 2518190422643181872}
+  skirtModel: {fileID: 534387932}
+  beltModel: {fileID: 1769332161455415639}
+  damagedMaterial: {fileID: 2100000, guid: f9adb923b6caf444288202d8a72b065c, type: 2}
 --- !u!1 &8897681063445876108
 GameObject:
   m_ObjectHideFlags: 0
@@ -48127,6 +48132,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 257d365b3e7a6854fb15a5ebdbc45ed4, type: 3}
   m_PrefabInstance: {fileID: 107875101}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &6963577243013859959 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6963577242911490410, guid: 257d365b3e7a6854fb15a5ebdbc45ed4, type: 3}
+  m_PrefabInstance: {fileID: 107875101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1439453310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48538,6 +48548,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest Armor
       objectReference: {fileID: 0}
+    - target: {fileID: 2363952386721607469, guid: 30f0e99eeecfd884aa303174c442fa1c, type: 3}
+      propertyPath: m_Name
+      value: Armor
+      objectReference: {fileID: 0}
     - target: {fileID: 8236229044572214780, guid: 30f0e99eeecfd884aa303174c442fa1c, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -48559,6 +48573,11 @@ PrefabInstance:
 --- !u!4 &543450651665719459 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 30f0e99eeecfd884aa303174c442fa1c, type: 3}
+  m_PrefabInstance: {fileID: 2076182344}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2518190422643181872 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -6705181615969005960, guid: 30f0e99eeecfd884aa303174c442fa1c, type: 3}
   m_PrefabInstance: {fileID: 2076182344}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2084568672
@@ -48624,11 +48643,20 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: fd3aee1fcbcdeb247be746cd7b52904a, type: 2}
+    - target: {fileID: 6909127538341687122, guid: 36f47a23ed896dc45bb961e3e722dcb0, type: 3}
+      propertyPath: m_Name
+      value: Belt
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36f47a23ed896dc45bb961e3e722dcb0, type: 3}
 --- !u!4 &543450651615730059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 36f47a23ed896dc45bb961e3e722dcb0, type: 3}
+  m_PrefabInstance: {fileID: 2084568672}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1769332161455415639 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1769332159371714359, guid: 36f47a23ed896dc45bb961e3e722dcb0, type: 3}
   m_PrefabInstance: {fileID: 2084568672}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &955003744281415352
