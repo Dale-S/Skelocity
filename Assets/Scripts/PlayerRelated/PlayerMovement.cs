@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private float runSpeed = 7.0f;
 
     //Jump Variables
-    private int numOfJumps = 2; //Number of bonus jumps (Ex. 2 = triple jump, 1 = double jump...)
+    private int numOfJumps = 1; //Number of bonus jumps (Ex. 2 = triple jump, 1 = double jump...)
     private int jumps;
     private float groundDetectionHeight = 1.2f;
     private float bufferHeight = 1.85f;
@@ -100,12 +100,10 @@ public class PlayerMovement : MonoBehaviour
 
     //Model
     public GameObject playerModel;
-
-    int ignoreMe;
+    
 
     private void Start()
     {
-        ignoreMe =~ LayerMask.GetMask("clothManipulator");
         playerRB = this.gameObject.GetComponent<Rigidbody>();
         playerObject = GetComponent<Transform>();
         player = this.gameObject;
@@ -117,11 +115,10 @@ public class PlayerMovement : MonoBehaviour
         jumps = numOfJumps;
         playerCollider = player.transform.GetComponent<CapsuleCollider>();
         startingYScale = playerCollider.height;
-        againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist, ignoreMe);
+        againstWall = Physics.Raycast(this.transform.position, Vector3.right, wallDetectionDist);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), new Vector3(1, -0.25f, 0), 0.8f);
-        clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist, ignoreMe);
+        clip = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.9f, 0), Vector3.right, wallDetectionDist);
         slopeDir = new Vector3(1, 0.25f, 0);
-
         animator = playerModel.GetComponent<Animator>();
 
         /*//Start Inventory
@@ -157,23 +154,41 @@ public class PlayerMovement : MonoBehaviour
 
         if (wallStickActive)
         {
+            jumps = numOfJumps;
             if (Input.GetKeyDown(jumpKey))
             {
-                wallSliding = false;
-                wallStickActive = false;
                 dir = -dir;
                 slopeDir = -slopeDir;
+                wallSliding = false;
+                wallStickActive = false;
                 pVelocity = -savedSpeed;
                 movement.x = pVelocity;
                 movement.y = jumpVel + 1;
+                
+            }
+            else if((dir > 0))
+            {
+                if (Input.GetKey(leftKey))
+                {
+                    dir = -dir;
+                    pVelocity = -Mathf.Abs(savedSpeed);
+                }
+            }
+            else if((dir < 0))
+            {
+                if (Input.GetKey(rightKey))
+                {
+                    dir = -dir;
+                    pVelocity = Mathf.Abs(savedSpeed);
+                }
             }
         }
 
         playerPos = this.transform.position;
         //Check to see if player is on the ground
-        Ray1 = Physics.Raycast(this.transform.position - new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight, ignoreMe);
-        Ray2 = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight, ignoreMe);
-        Ray3 = Physics.Raycast(this.transform.position + new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight, ignoreMe);
+        Ray1 = Physics.Raycast(this.transform.position - new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight);
+        Ray2 = Physics.Raycast(this.transform.position, Vector3.down, groundDetectionHeight);
+        Ray3 = Physics.Raycast(this.transform.position + new Vector3(0.38f, 0, 0), Vector3.down, groundDetectionHeight);
         if(Ray1 || Ray2 || Ray3){
             isGrounded = true;
         }
@@ -181,10 +196,10 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
         }
         headHit = Physics.Raycast(this.transform.position, Vector3.up, groundDetectionHeight);
-        jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight, ignoreMe);
+        jumpBuffer = Physics.Raycast(this.transform.position, Vector3.down, bufferHeight);
         slope = Physics.Raycast(this.gameObject.transform.position - new Vector3(0, 0.5f, 0), slopeDir, 0.8f);
-        againstWall = Physics.Raycast(this.transform.position, new Vector3(dir,0,0), wallDetectionDist, ignoreMe);
-        clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), new Vector3(dir,0,0), wallDetectionDist, ignoreMe);
+        againstWall = Physics.Raycast(this.transform.position, new Vector3(dir,0,0), wallDetectionDist);
+        clip = Physics.Raycast(this.transform.position - new Vector3(0, 0.9f, 0), new Vector3(dir,0,0), wallDetectionDist);
         if (pVelocity > 1)
         {
             player.transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -251,6 +266,34 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
+            if (!isGrounded && !wallStickActive)
+            {
+                if (Input.GetKey(rightKey))
+                {
+                    if (pVelocity < walkSpeed + 3)
+                    {
+                        pVelocity += speedIncWalk;
+                    }
+
+                    if (pVelocity > walkSpeed + 3)
+                    {
+                        pVelocity -= speedIncWalk;
+                    }
+                }
+                else if(Input.GetKey(leftKey))
+                {
+                    if (pVelocity > -(walkSpeed + 3))
+                    {
+                        pVelocity -= speedIncWalk;
+                    }
+
+                    if (pVelocity > walkSpeed + 3)
+                    {
+                        pVelocity += speedIncWalk;
+                    }
+                }
+            }
+
             if (shortHop)
             {
                 if (Input.GetKeyUp(jumpKey))
@@ -263,18 +306,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //--------------------------------------------------------------------\\
-
-        //Air Reversal Code----------------------------------------------------\\
-        //if (!isGrounded)
-        //{   
+        
             
             if((Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
             {
-                if (movement.x > 0)
-                {
-                    //return;
-                }
-
                 if (movement.x < 0) 
                 { 
                     pVelocity = (movement.x * -1);
@@ -284,11 +319,6 @@ public class PlayerMovement : MonoBehaviour
 
             if (!Input.GetKey(rightKey) && Input.GetKey(leftKey))
             {
-                if (movement.x < 0)
-                {
-                    //return;
-                }
-
                 if (movement.x > 0)
                 {
                     pVelocity = (movement.x * -1);
@@ -341,7 +371,7 @@ public class PlayerMovement : MonoBehaviour
         //Equipped Items Buff
         //BootsBuff();
         //Walking and Running Control ------------------------------------------\\
-        if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)))
+        if ((Input.GetKey(rightKey) && !Input.GetKey(leftKey)) && isGrounded)
         {
             if (Input.GetKey(sprint))
             {
@@ -394,7 +424,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if ((Input.GetKey(leftKey) && !Input.GetKey(rightKey)))
+        if ((Input.GetKey(leftKey) && !Input.GetKey(rightKey)) && isGrounded)
         {
             if (Input.GetKey(sprint))
             {

@@ -20,6 +20,7 @@ public class PlayerStats : MonoBehaviour
     public float walkSpeed = 4;
     public int extraJumps = 1;
     public float invinTime = 3f;
+    public float multi = 1;
     
     // Start is called before the first frame update
     void Start()
