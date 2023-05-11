@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelScript : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class LevelScript : MonoBehaviour
     private float tick2 = 5f;
     private float tick3 = 5f;
     private PlayerStats PS;
+    public Image mask1;
+    public Image mask2;
     
     // Start is called before the first frame update
     void Start()
@@ -81,7 +84,9 @@ public class LevelScript : MonoBehaviour
             xpToNext1 = 30 * movementLVL;
             skillPoints1 += 1;
         }
-        Debug.Log("current XP: " + currXP1 + "  |  current LVL: " + movementLVL);
+        
+        GetFillAmount1();
+        GetFillAmount2();
     }
 
     public void addXP() //This function is for combat xp only;
@@ -94,5 +99,17 @@ public class LevelScript : MonoBehaviour
             xpToNext2 = 15 * combatLVL;
             skillPoints2 += 1;
         }
+    }
+
+    void GetFillAmount1()
+    {
+        float fillAmount = (float)currXP1 / (float)xpToNext1;
+        mask1.fillAmount = fillAmount;
+    }
+    
+    void GetFillAmount2()
+    {
+        float fillAmount = (float)currXP2 / (float)xpToNext2;
+        mask2.fillAmount = fillAmount;
     }
 }
