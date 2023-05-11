@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9195296622709765302}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PortalObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 9195296623519609816}
   - component: {fileID: 9195296623519609815}
   - component: {fileID: 9195296623519609818}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PortalHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,6 +209,14 @@ PrefabInstance:
     - target: {fileID: 5540566245263265450, guid: d70ac0f826f8f2e4f9f90f9b46c34f1f, type: 3}
       propertyPath: m_Name
       value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540566245263265450, guid: d70ac0f826f8f2e4f9f90f9b46c34f1f, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8037591867886979837, guid: d70ac0f826f8f2e4f9f90f9b46c34f1f, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d70ac0f826f8f2e4f9f90f9b46c34f1f, type: 3}

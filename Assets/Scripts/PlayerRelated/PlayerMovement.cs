@@ -270,26 +270,32 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (Input.GetKey(rightKey))
                 {
-                    if (pVelocity < walkSpeed + 3)
+                    if (Mathf.Abs(pVelocity) < 7)
                     {
-                        pVelocity += speedIncWalk;
-                    }
+                        if (pVelocity < walkSpeed + 3)
+                        {
+                            pVelocity += speedIncWalk;
+                        }
 
-                    if (pVelocity > walkSpeed + 3)
-                    {
-                        pVelocity -= speedIncWalk;
+                        if (pVelocity > walkSpeed + 3)
+                        {
+                            pVelocity -= speedIncWalk;
+                        }
                     }
                 }
                 else if(Input.GetKey(leftKey))
                 {
-                    if (pVelocity > -(walkSpeed + 3))
+                    if (Mathf.Abs(pVelocity) < 7)
                     {
-                        pVelocity -= speedIncWalk;
-                    }
+                        if (pVelocity > -(walkSpeed + 3))
+                        {
+                            pVelocity -= speedIncWalk;
+                        }
 
-                    if (pVelocity > walkSpeed + 3)
-                    {
-                        pVelocity += speedIncWalk;
+                        if (pVelocity > walkSpeed + 3)
+                        {
+                            pVelocity += speedIncWalk;
+                        }
                     }
                 }
             }

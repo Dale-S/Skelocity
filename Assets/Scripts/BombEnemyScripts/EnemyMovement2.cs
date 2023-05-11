@@ -48,6 +48,7 @@ public class EnemyMovement2 : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         animator = enemyModel.GetComponent<Animator>();
         levelManager = GameObject.Find("LevelManager");
+        distanceToPlayer = 10f;
     }
 
     private void FixedUpdate()

@@ -76,16 +76,7 @@ public class MarksmenScanner : MonoBehaviour
         ShootBullet();
 
         // Short delay before the second shot
-        yield return new WaitForSeconds(burstInterval * 0.5f);
-
-        // Second shot
-        ShootBullet();
-
-        // Longer delay before the third shot
         yield return new WaitForSeconds(burstInterval * 1.5f);
-
-        // Third shot
-        ShootBullet();
 
         isShooting = false;
     }

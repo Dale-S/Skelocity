@@ -42912,7 +42912,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   bulletPrefab: {fileID: 6557836278554873861, guid: 8196969792eaa4346b72da60f86f33ec, type: 3}
-  burstInterval: 0.3
+  burstInterval: 2.5
   bulletSpeed: 8
   isShooting: 0
   enemyModel: {fileID: 4592591556165827357}

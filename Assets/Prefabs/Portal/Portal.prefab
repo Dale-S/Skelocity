@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5283753689844992453}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 290218115151540607}
   - component: {fileID: 650644824115000774}
   - component: {fileID: 871435143766657809}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
