@@ -8,8 +8,11 @@ using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour, IPointerClickHandler
 {
+
+
     public GameObject pauseMenuUI;
     public GameObject controlsMenuUI;
+    public GameObject creditsMenuUI;
     public AudioMixer mainMixer;
     public Button hubButton;
     public Button soundsButton;
@@ -25,6 +28,8 @@ public class PauseMenu : MonoBehaviour, IPointerClickHandler
         audioSettingsPanel.SetActive(false);
         pauseMenuUI.SetActive(false);
         controlsMenuUI.SetActive(false);
+        creditsMenuUI.SetActive(false);
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -69,24 +74,54 @@ public class PauseMenu : MonoBehaviour, IPointerClickHandler
     {
         Application.Quit();
     }
+
+    public void CreditsToggle()
+    {
+       
+        if (creditsMenuUI.activeSelf == true)
+        {
+            creditsMenuUI.SetActive(false);
+           
+        }
+        else
+        {
+            creditsMenuUI.SetActive(true);
+          
+        } 
+    }
+    public void ControlsToggle()
+    {
+        if (controlsMenuUI.activeSelf == true)
+        {
+            controlsMenuUI.SetActive(false);
+           
+        }
+        else
+        {
+            controlsMenuUI.SetActive(true);
+          
+        } 
+    }
+    
     public void ToggleAudioSettings()
     {
-        Debug.Log("ToggleAudioSettings called");
+     
         if (audioSettingsPanel.activeSelf == true)
         {
             audioSettingsPanel.SetActive(false);
-            Debug.Log("Panel deactivated");
+         
         }
         else
         {
             audioSettingsPanel.SetActive(true);
-            Debug.Log("Panel activated");
+     
         }
     }
 
 
     public void SetOverallVolume(float volume)
     {
+        Debug.Log("You touched me wtf?");
         mainMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
     }
     
