@@ -19,12 +19,14 @@ public class LevelScript : MonoBehaviour
     private float tick1 = 5f;
     private float tick2 = 5f;
     private float tick3 = 5f;
+    private PlayerStats PS;
     
     // Start is called before the first frame update
     void Start()
     {
         player = this.gameObject;
         PM = player.GetComponent<PlayerMovement>();
+        PS = player.GetComponent<PlayerStats>();
         
         //Data to be saved
         movementLVL = 1;
@@ -84,6 +86,13 @@ public class LevelScript : MonoBehaviour
 
     public void addXP() //This function is for combat xp only;
     {
-        
+        currXP2 += 5;
+        if (currXP2 >= xpToNext2)
+        {
+            currXP2 = currXP2 % xpToNext1;
+            combatLVL += 1;
+            xpToNext2 = 15 * combatLVL;
+            skillPoints2 += 1;
+        }
     }
 }

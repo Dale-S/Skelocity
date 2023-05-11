@@ -113,9 +113,11 @@ public class EnemyMovement : MonoBehaviour
         
         animator.SetFloat("Speed", Math.Abs(speed));
     }
-
-    public Vector3 getDir()
+    
+    void dealtDamage(float damageDealt)
     {
-        return new Vector3(walkDir, 0f, 0f);
+        enemyHP -= damageDealt;
+        Debug.Log(enemyHP);
+        Debug.Log("Ouch from hook");
     }
 }

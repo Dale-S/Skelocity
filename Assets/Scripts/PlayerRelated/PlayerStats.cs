@@ -7,13 +7,13 @@ public class PlayerStats : MonoBehaviour
     public int defExtraJumps = 1;
     public float defInvTime = 3f;
     public float defMaxVelocity = 15.0f;
-    public float defDamage = 5;
+    public float defDamage = 10;
     public float defWalk = 4;
     public float defSprint = 7;
-    public float defAttackRange = 3;
-    public int defHearts = 3;
+    public float defAttackRange = 5f; 
+    public int defHearts = 5;
     public float maxVelocity = 15.0f;
-    public int hearts = 3;
+    public int hearts = 5;
     public float attackRange = 3;
     public float damage = 5;
     public float sprintSpeed = 7;

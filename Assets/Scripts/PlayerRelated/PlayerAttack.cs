@@ -10,6 +10,8 @@ public class PlayerAttack : MonoBehaviour
     private bool attackCooldown = false;
     private float dTimer = 2f;
     private float timer = 1f;
+    private bool enemyHit;
+    public RaycastHit hit;
 
     //Attack Sound Effect
     private AudioSource attackSound;
@@ -30,6 +32,7 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        enemyHit = Physics.Raycast(transform.position, new Vector3(PM.dir, 0, 0), out hit, PS.attackRange);
         if (Input.GetKeyDown(KeyCode.L) && !attackCooldown)
         {
             attack();
@@ -50,12 +53,11 @@ public class PlayerAttack : MonoBehaviour
     {
         attackSound.PlayDelayed(0.5f);
         animator.SetTrigger("Attacking");
-        animator.SetTrigger("Attacking");
         timer = dTimer;
         attackCooldown = true;
         damageDealt = PS.damage * Mathf.Abs(PM.pVelocity);
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, new Vector3(PM.dir, 0, 0), out hit, PS.attackRange))
+        
+        if (enemyHit)
         {
             hit.transform.SendMessage("dealtDamage", damageDealt);
         }
