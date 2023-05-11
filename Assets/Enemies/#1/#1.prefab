@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e781b32f02c4b64689cabbd1b848496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 10.29
+  detectionRadius: 4
   gizmoColor: {r: 0, g: 1, b: 0, a: 1}
-  speed: 3
+  speed: 1.5
   edge: 0
   wall: 0
   isGrounded: 0

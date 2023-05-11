@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private float runSpeed = 7.0f;
 
     //Jump Variables
-    private int numOfJumps = 1; //Number of bonus jumps (Ex. 2 = triple jump, 1 = double jump...)
+    private int numOfJumps = 2; //Number of bonus jumps (Ex. 2 = triple jump, 1 = double jump...)
     private int jumps;
     private float groundDetectionHeight = 1.2f;
     private float bufferHeight = 1.85f;
@@ -541,7 +541,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!wallStickActive)
         {
-            Debug.Log("Wall stick activated");
+            //Debug.Log("Wall stick activated");
             wallSliding = false;
             wallStickActive = true;
             savedSpeed = movement.x;
