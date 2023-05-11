@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 1642786322}
   - component: {fileID: 1642786321}
   - component: {fileID: 1642786320}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: HipCapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39819,6 +39819,7 @@ MonoBehaviour:
   walkSpeed: 4
   extraJumps: 1
   invinTime: 3
+  multi: 1
 --- !u!114 &8897681063432605959
 MonoBehaviour:
   m_ObjectHideFlags: 0
